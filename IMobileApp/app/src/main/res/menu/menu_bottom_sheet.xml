@@ -6,13 +6,14 @@
         android:title="@string/menu_select"
         android:icon="@drawable/ic_done_black_24dp"/>
 
-    <item
-    android:id="@+id/action_delete"
-    android:title="@string/menu_delete"
-        android:icon="@drawable/bs_ic_clear_light" />
 
     <item
         android:id="@+id/action_send"
         android:title="@string/send"
         android:icon="@drawable/ic_send_black_24dp"/>
+
+    <item
+        android:id="@+id/action_delete"
+        android:title="@string/menu_delete"
+        android:icon="@drawable/bs_ic_clear_light" />
 </menu>
