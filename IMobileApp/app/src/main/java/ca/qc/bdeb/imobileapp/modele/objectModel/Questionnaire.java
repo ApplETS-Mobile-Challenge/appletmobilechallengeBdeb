@@ -87,5 +87,4 @@ public class Questionnaire implements Serializable {
             question.rebuildAfterSend();
         }
     }
-
 }
