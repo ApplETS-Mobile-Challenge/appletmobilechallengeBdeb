@@ -26,7 +26,7 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
     private String reponsePopup;
 
     private List<OptionAnswer> listHashmapAnswers; // liste de reponses
-    private ListView listViewAnswers;//
+    private ListView listViewAnswers;
     private Option_Answer_Adapter answer_adapter;
     public boolean caseChecked;
 
@@ -48,6 +48,13 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
             }
         });
 
+        listHashmapAnswers = new ArrayList<>();
+
+        listViewAnswers = (ListView) findViewById(R.id.Add_Modify_Question_ListView);
+        answer_adapter = new Option_Answer_Adapter(Add_Modify_Question.this, R.layout.layout_list_answer, listHashmapAnswers, this);
+        listViewAnswers.setAdapter(answer_adapter);
+
+        answer_adapter.notifyDataSetChanged();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        final Question question = new Question();
@@ -85,13 +92,7 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         }
 
         return super.onOptionsItemSelected(item);
-        listHashmapAnswers = new ArrayList<>();
 
-        listViewAnswers = (ListView) findViewById(R.id.Add_Modify_Question_ListView);
-        answer_adapter = new Option_Answer_Adapter(Add_Modify_Question.this, R.layout.layout_list_answer, listHashmapAnswers, this);
-        listViewAnswers.setAdapter(answer_adapter);
-
-        answer_adapter.notifyDataSetChanged();
     }
 
     @Override
