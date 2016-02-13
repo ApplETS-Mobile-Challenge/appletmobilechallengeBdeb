@@ -7,9 +7,9 @@
         android:icon="@drawable/ic_done_black_24dp"/>
 
     <item
-    android:id="@+id/action_modify"
-    android:title="@string/menu_modify"
-        android:icon="@drawable/ic_edit_black_24dp"/>
+    android:id="@+id/action_delete"
+    android:title="@string/menu_delete"
+        android:icon="@drawable/bs_ic_clear_light" />
 
     <item
         android:id="@+id/action_send"

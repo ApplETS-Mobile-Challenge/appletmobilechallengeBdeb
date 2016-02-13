@@ -4,7 +4,7 @@
     <string name="title_activity_home_page">ShareKnowledge</string>
 
     <string name="menu_create">CREATE SURVEY</string>
-    <string name="menu_modify">Modify</string>
+    <string name="menu_delete">Delete</string>
     <string name="menu_send">SEND</string>
     <string name="menu_receive">RECEIVE SURVEY</string>
     <string name="menu_select">Answer</string>

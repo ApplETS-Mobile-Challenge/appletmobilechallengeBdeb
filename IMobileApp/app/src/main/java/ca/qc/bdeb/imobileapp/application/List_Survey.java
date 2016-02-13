@@ -78,7 +78,7 @@ public class List_Survey extends AppCompatActivity {
     private void addListListener() {
         listViewActivite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 final int questionnaireId = questionnaireList.get(position).questionnaireId;
                 new BottomSheet.Builder(List_Survey.this).title(adapterActivite.getItem(position).questionnaireName).sheet(R.menu.menu_bottom_sheet).listener(new DialogInterface.OnClickListener() {
                     @Override
@@ -89,8 +89,10 @@ public class List_Survey extends AppCompatActivity {
                                 intentAnswer.putExtra(AnswerActivity.QUESTIONNAIRE, dbHelper.getOneQuestionnaire(questionnaireId));
                                 startActivity(intentAnswer);
                                 break;
-                            case R.id.action_modify:
-
+                            case R.id.action_delete:
+                                dbHelper.deleteQuestionnaire(dbHelper.getOneQuestionnaire(questionnaireId));
+                                questionnaireList.remove(position);
+                                adapterActivite.notifyDataSetChanged();
                                 break;
                             case R.id.action_send:
                                 Intent intent = new Intent(List_Survey.this, SendActivity.class);
