@@ -61,7 +61,12 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
                 finish();
             }
         });
+        listHashmapAnswers = new ArrayList<>();
 
+        listViewAnswers = (ListView) findViewById(R.id.Add_Modify_Question_ListView);
+        answer_adapter = new Option_Answer_Adapter(Add_Modify_Question.this, R.layout.layout_list_answer, listHashmapAnswers, this);
+        listViewAnswers.setAdapter(answer_adapter);
+        answer_adapter.notifyDataSetChanged();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -85,12 +90,7 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         }
 
         return super.onOptionsItemSelected(item);
-//        listHashmapAnswers = new ArrayList<>();
 
-//        listViewAnswers = (ListView) findViewById(R.id.Add_Modify_Question_ListView);
-//        answer_adapter = new Option_Answer_Adapter(Add_Modify_Question.this, R.layout.layout_list_answer, listHashmapAnswers, this);
-//        listViewAnswers.setAdapter(answer_adapter);
-//        answer_adapter.notifyDataSetChanged();
     }
 
     @Override
