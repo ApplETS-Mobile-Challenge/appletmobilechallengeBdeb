@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,14 +27,12 @@ public class Option_Answer_Adapter extends ArrayAdapter<OptionAnswer> {
     private Context context;
     private List<OptionAnswer> optionAnswerList;
     private Activity activity;
-    private int lastChecked;
 
     public Option_Answer_Adapter(Context context, int resource, List<OptionAnswer> list, Activity activite) {
         super(context, resource, list);
         this.context = context;
         this.optionAnswerList = list;
         this.activity = activite;
-        lastChecked = -1;
     }
 
     private class answerOption {
@@ -71,13 +70,19 @@ public class Option_Answer_Adapter extends ArrayAdapter<OptionAnswer> {
                 @Override
                 public void onClick(View v) {
                     CheckBox fb = (CheckBox) v;
-                       if (lastChecked == -1){
-                           lastChecked = (Integer)fb.getTag();
-                       }else if((Integer)fb.getTag() == lastChecked) {
-                           lastChecked = -1;
-                       }else {
-                           fb.setChecked(false);
-                       }
+
+                        if (!fb.isChecked()){
+                            ((Add_Modify_Question) activity).checkCaseTrue(false, (int)fb.getTag());
+                        }else {
+                            if(!((Add_Modify_Question)activity).isCheckCase()) {
+                                ((Add_Modify_Question) activity).checkCaseTrue(true, (int)fb.getTag());
+                            }
+                            else {
+                                fb.setChecked(false);
+                                Toast.makeText(activity.getApplicationContext(),
+                                        "You already have an answer choice", Toast.LENGTH_LONG).show();
+                            }
+                    }
                 }
             });
 
