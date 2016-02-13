@@ -33,9 +33,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.net.FileNameMap;
 import java.util.Set;
 
 import ca.qc.bdeb.imobileapp.R;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
  * This Activity appears as a dialog. It lists any paired devices and

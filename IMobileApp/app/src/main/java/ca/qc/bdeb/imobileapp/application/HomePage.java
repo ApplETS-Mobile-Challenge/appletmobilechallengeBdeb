@@ -28,20 +28,11 @@ public class HomePage extends AppCompatActivity {
 
     private void initializeComponent() {
 
-        btnSend = (FancyButton) findViewById(R.id.home_page_btn_envoyer);
         btnReceive = (FancyButton) findViewById(R.id.home_page_btn_recevoir);
         btnSurvey = (FancyButton) findViewById(R.id.home_page_btn_voir_questionnaire);
     }
 
     private void initializeBtnsClick(){
-
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomePage.this, SendActivity.class);
-                startActivity(intent);
-            }
-        });
 
         btnReceive.setOnClickListener(new View.OnClickListener() {
             @Override
