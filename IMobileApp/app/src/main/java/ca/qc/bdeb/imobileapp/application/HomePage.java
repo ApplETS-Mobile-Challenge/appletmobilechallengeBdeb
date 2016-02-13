@@ -19,6 +19,7 @@ public class HomePage extends AppCompatActivity {
     FancyButton btnSend;
     FancyButton btnReceive;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
