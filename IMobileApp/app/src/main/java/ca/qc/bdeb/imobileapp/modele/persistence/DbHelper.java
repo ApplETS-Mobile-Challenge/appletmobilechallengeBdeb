@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -116,25 +117,28 @@ public class DbHelper extends SQLiteOpenHelper {
         insertNewQuestions(questionnaire.getQuestionList(), questionnaireId);
     }
 
-    private void insertNewQuestions(ArrayList<Question> questions, int questionnaireId) {
+    public void insertNewQuestions(ArrayList<Question> questions, int questionnaireId) {
         SQLiteDatabase db;
         ContentValues values;
 
-        db = this.getWritableDatabase();
         for (Question question : questions) {
+            db = this.getWritableDatabase();
             values = new ContentValues();
             values.put(QUESTION_QUESTION, question.getQuestion());
             values.put(QUESTION_QUESTIONNAIRE_REFERENCE_ID,  questionnaireId);
             int questionId = (int) db.insert(QUESTION_TABLE_NAME, null, values);
-            insertNewAnswerChoices(db, question.getAnswerChoices(), questionId);
+            db.close();
+            insertNewAnswerChoices(question.getAnswerChoices(), questionId);
         }
-        db.close();
-
     }
-    private void insertNewAnswerChoices(SQLiteDatabase db, HashMap<String , Boolean> answerChoices,
+
+    public void insertNewAnswerChoices(HashMap<String , Boolean> answerChoices,
                                         int questionId) {
+        SQLiteDatabase db;
+
         ContentValues values;
         for(Entry<String , Boolean> answer : answerChoices.entrySet() ) {
+            db = this.getWritableDatabase();
             String answerChoice = answer.getKey();
             boolean veracity = answer.getValue();
             values = new ContentValues();
@@ -142,6 +146,34 @@ public class DbHelper extends SQLiteOpenHelper {
             values.put(ANSWER_VERACITY, veracity ? 1 : 0);
             values.put(ANSWER_QUESTION_REFERENCE_ID, questionId);
             db.insert(ANSWER_CHOICES_TABLE_NAME, null, values);
+            db.close();
         }
+    }
+
+
+
+    public void deleteQuestionnaire(Questionnaire questionnaire) {
+        deleteQuestions(questionnaire.getQuestionList(),questionnaire.getQuestionnaireId());
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(QUESTION_TABLE_NAME, QUESTIONNAIRE_ID + "=?",
+                new String[]{Integer.toString(questionnaire.getQuestionnaireId())});
+        db.close();
+    }
+
+    public void deleteQuestions(ArrayList<Question> questions,int questionnaireId) {
+        deleteAnswerChoices(questions);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(QUESTION_TABLE_NAME, QUESTION_QUESTIONNAIRE_REFERENCE_ID + "=?",
+                new String[]{Integer.toString(questionnaireId)});
+        db.close();
+    }
+
+    public void deleteAnswerChoices(ArrayList<Question> questions) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        for(Question question : questions) {
+            db.delete(ANSWER_CHOICES_TABLE_NAME, ANSWER_QUESTION_REFERENCE_ID + "=?",
+                    new String[]{Integer.toString(question.getQuestionId())});
+        }
+        db.close();
     }
 }
