@@ -7,6 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
@@ -30,7 +37,10 @@ public class AnswerFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private FancyButton fancyButton;
+    private ListView listView;
+    private TextView textView;
 
+    private ArrayAdapterAnswerQuestion adpater;
     public AnswerFragment() {
         // Required empty public constructor
     }
@@ -52,6 +62,9 @@ public class AnswerFragment extends Fragment {
             questionnaireName = getArguments().getString(QUESTIONNAIRE_NAME);
             question = (Question) getArguments().getSerializable(QUESTION);
         }
+        if(question != null) {
+            adpater = new ArrayAdapterAnswerQuestion(getActivity().getApplicationContext(), R.layout.layout_list_answer_question, getAnswerList());
+        }
     }
 
     @Override
@@ -67,6 +80,8 @@ public class AnswerFragment extends Fragment {
                     mListener.onFragmentInteraction(true);
                 }
             });
+            textView = (TextView) rootView.findViewById(R.id.answer_activity_questionnaire_name_txt_view);
+            textView.setText(questionnaireName);
         }
         else {
             rootView = inflater.inflate(R.layout.fragment_answer, container, false);
@@ -77,6 +92,10 @@ public class AnswerFragment extends Fragment {
                     mListener.onFragmentInteraction(true);
                 }
             });
+            listView = (ListView) rootView.findViewById(R.id.list_view_answer_question);
+            listView.setAdapter(adpater);
+            textView = (TextView) rootView.findViewById(R.id.answer_activity_question_txt_view);
+            textView.setText(question.getQuestion());
         }
         return rootView;
     }
@@ -118,5 +137,13 @@ public class AnswerFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(boolean goodAnswer);
+    }
+
+    private ArrayList<String> getAnswerList() {
+        ArrayList<String> answerList = new ArrayList<>();
+        for(Map.Entry<String, Boolean> entry : question.getAnswerChoices().entrySet()) {
+            answerList.add(entry.getKey());
+        }
+        return answerList;
     }
 }
