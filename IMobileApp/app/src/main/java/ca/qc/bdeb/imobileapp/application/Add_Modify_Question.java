@@ -115,8 +115,10 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         answer_adapter.notifyDataSetChanged();
     }
     public void checkCaseTrue(){
-        if (!caseChecked){
-
+        if (caseChecked){
+            caseChecked = false;
+        }else {
+            caseChecked = true;///
         }
     }
 }
