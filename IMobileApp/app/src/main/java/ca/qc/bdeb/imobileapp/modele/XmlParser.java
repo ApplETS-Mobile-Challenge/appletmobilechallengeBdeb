@@ -25,8 +25,7 @@ public class XmlParser
     public void ReadFromXml(String data){
         XStream xstream = new XStream(new DomDriver());
         Questionnaire newQuestionnaire = (Questionnaire)xstream.fromXML(data);
-        //todo Add to bd
-//        db.saveQuestionnaire;
+        db.insertNewQuestionnaire(newQuestionnaire);
     }
 
 
