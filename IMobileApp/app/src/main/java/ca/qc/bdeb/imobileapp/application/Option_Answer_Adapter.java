@@ -74,7 +74,7 @@ public class Option_Answer_Adapter extends ArrayAdapter<OptionAnswer> {
                         fb.setChecked(false);
                     }else {
                         ((Add_Modify_Question) activity).checkCaseTrue();
-                        
+
                     }
                 }
             });
