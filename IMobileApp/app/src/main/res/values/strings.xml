@@ -2,4 +2,13 @@
     <string name="app_name">IMobileApp</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_home_page">Home Page</string>
+
+    <string name="menu_create">CREATE</string>
+    <string name="menu_modify">MODIFY</string>
+    <string name="menu_send">SEND</string>
+    <string name="menu_receive">RECEIVE</string>
+    <string name="menu_select">SELECT</string>
+    <string name="menu_see_gestionnaire">SURVEY</string>
+    <string name="menu_info">\?</string>
+
 </resources>
