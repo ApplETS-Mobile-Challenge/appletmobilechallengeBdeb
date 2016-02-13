@@ -32,7 +32,8 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
     private List<OptionAnswer> listHashmapAnswers; // liste de reponses
     private ListView listViewAnswers;
     private Option_Answer_Adapter answer_adapter;
-    public boolean caseChecked;
+    private boolean caseChecked;
+    private int positionCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +89,14 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
                 Question question = new Question(0, editText.getText().toString(), 0);
 
                 for(int i = 0; i < listViewAnswers.getAdapter().getCount(); i++){
-                    question.addAnswerChoices(answer_adapter.getItem(i).getAnswer()
-                            , answer_adapter.getItem(i).getaBoolean());
+                    if(i != positionCheck) {
+                        question.addAnswerChoices(answer_adapter.getItem(i).getAnswer()
+                                , answer_adapter.getItem(i).getaBoolean());
+                    }
+                    else {
+                        question.addAnswerChoices(answer_adapter.getItem(i).getAnswer()
+                                , true);
+                    }
                 }
                 Intent intent = new Intent();
                 intent.putExtra("question", question);
@@ -144,9 +151,12 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         listHashmapAnswers.remove(position);
         answer_adapter.notifyDataSetChanged();
     }
-    public void checkCaseTrue(){
-        if (!caseChecked){
+    public void checkCaseTrue(boolean isCheck, int position){
+        caseChecked = isCheck;
+        positionCheck = position;
+    }
 
-        }
+    public boolean isCheckCase() {
+        return caseChecked;
     }
 }
