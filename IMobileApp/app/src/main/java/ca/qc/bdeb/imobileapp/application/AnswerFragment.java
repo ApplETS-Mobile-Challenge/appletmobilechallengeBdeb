@@ -102,8 +102,6 @@ public class AnswerFragment extends Fragment {
                     if(choosenAnswer != null) {
                         if(question.getAnswerChoices().get(choosenAnswer)) {
                             final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                            alert.setTitle("Create a questionnaire");
-                            alert.setMessage("Enter a title");
                             // Create TextView
                             final TextView input = new TextView (getActivity());
                             alert.setTitle("Nice job !!");
@@ -200,5 +198,9 @@ public class AnswerFragment extends Fragment {
 
     public void checkBoxClicked(String  key) {
         choosenAnswer = key;
+    }
+
+    public String getChoosenAnswer() {
+        return choosenAnswer;
     }
 }

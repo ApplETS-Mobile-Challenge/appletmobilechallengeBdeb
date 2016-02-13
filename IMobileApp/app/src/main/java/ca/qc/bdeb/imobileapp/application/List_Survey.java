@@ -26,6 +26,8 @@ import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
 
 public class List_Survey extends AppCompatActivity {
 
+    private static final int QUESTIONNAIRE_CREATE = 1;
+    private static final String QUESTIONNAIRE_TEMPLATE = "questionnaire";
     private ListView listViewActivite;//
     private Survey_Adapter adapterActivite;
     private DbHelper dbHelper;
@@ -46,7 +48,7 @@ public class List_Survey extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(List_Survey.this, Create_Survey.class);
-                startActivity(intent);
+                startActivityForResult(intent, QUESTIONNAIRE_CREATE);
 
             }
         });
@@ -59,6 +61,18 @@ public class List_Survey extends AppCompatActivity {
         listViewActivite.setAdapter(adapterActivite);
 
         addListListener();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == QUESTIONNAIRE_CREATE) {
+            QuestionnaireTemplate questionnaireTemplate =
+                    (QuestionnaireTemplate) data.getSerializableExtra(QUESTIONNAIRE_TEMPLATE);
+            questionnaireList.add(questionnaireTemplate);
+            adapterActivite.notifyDataSetChanged();
+        }
     }
 
     private void addListListener() {

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,19 @@ public class ArrayAdapterAnswerQuestion extends ArrayAdapter<String> {
                 @Override
                 public void onClick(View v) {
                     CheckBox checkBox = (CheckBox)v;
-                    ((AnswerFragment) fragment).checkBoxClicked((String)checkBox.getText());
+                    if(!checkBox.isChecked()) {
+                        ((AnswerFragment) fragment).checkBoxClicked(null);
+                    }
+                    else {
+                        if(((AnswerFragment)fragment).getChoosenAnswer() == null) {
+                            ((AnswerFragment) fragment).checkBoxClicked((String) checkBox.getText());
+                        }
+                        else {
+                            Toast.makeText(fragment.getContext(), "You can't choose tow answer",
+                                    Toast.LENGTH_LONG).show();
+                            checkBox.setChecked(false);
+                        }
+                    }
                 }
             });
             convertView.setTag(holder);

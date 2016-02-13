@@ -23,10 +23,13 @@ import java.util.List;
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
+import ca.qc.bdeb.imobileapp.modele.objectModel.QuestionnaireTemplate;
 import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
 
 public class Create_Survey extends AppCompatActivity {
 
+    private static final int QUESTIONNAIRE_CREATE = 1;
+    private static final String QUESTIONNAIRE_TEMPLATE = "questionnaire";
     public static final int RESULT_SUCCES = 1;
     private ArrayList<Question> questionList;
     private ListView listViewQuestion;
@@ -89,6 +92,11 @@ public class Create_Survey extends AppCompatActivity {
                             cal.getTime(), cal.getTime());
                     questionnaire.setQuestionList(questionList);
                     dbHelper.insertNewQuestionnaire(questionnaire);
+                    QuestionnaireTemplate ques = new QuestionnaireTemplate();
+                    ques = questionnaire.convertToQuestionnaireTemplate();
+                    Intent intent = new Intent();
+                    intent.putExtra(QUESTIONNAIRE_TEMPLATE, ques);
+                    setResult(QUESTIONNAIRE_CREATE, intent);
                     finish();
                 }
             });
