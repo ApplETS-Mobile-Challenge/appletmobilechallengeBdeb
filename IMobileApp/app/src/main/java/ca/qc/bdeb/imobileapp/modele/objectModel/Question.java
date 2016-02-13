@@ -1,5 +1,8 @@
 package ca.qc.bdeb.imobileapp.modele.objectModel;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,15 +11,20 @@ import java.util.Map;
 /**
  * Created by Vincent on 12/02/2016.
  */
+@XStreamAlias("QUESTION")
 public class Question implements Serializable {
 
+    @XStreamAlias("QUESTION_ID")
     private int questionId;
-    private int questionnaireId;
-    private String question;
-    private HashMap<String, Boolean> answerChoices;
-    private String[] tabQuestionChoices;
-    private boolean[] tabQuestionChoicesResponse;
 
+    @XStreamAlias("QUESTION_QUESTIONNAIRE_ID")
+    private int questionnaireId;
+
+    @XStreamAlias("QUESTION")
+    private String question;
+
+    @XStreamImplicit(itemFieldName = "ban")
+    private HashMap<String, Boolean> answerChoices;
 
     public Question(int questionId, String question, int questionnaireId) {
         this.questionId = questionId;
@@ -68,49 +76,4 @@ public class Question implements Serializable {
     public String getQuestion() {
         return this.question;
     }
-
-    public String[] getTabQuestionChoices() {
-        return tabQuestionChoices;
-    }
-
-    public void setTabQuestionChoices(String[] tabQuestionChoices) {
-        this.tabQuestionChoices = tabQuestionChoices;
-    }
-
-    public boolean[] getTabQuestionChoicesResponse() {
-        return tabQuestionChoicesResponse;
-    }
-
-    public void setTabQuestionChoicesResponse(boolean[] tabQuestionChoicesResponse) {
-        this.tabQuestionChoicesResponse = tabQuestionChoicesResponse;
-    }
-
-
-    public void convertBeforeSend() {
-        if (!answerChoices.isEmpty()) {
-            tabQuestionChoices = new String[answerChoices.size()];
-            tabQuestionChoicesResponse = new boolean[answerChoices.size()];
-            int i = 0;
-            Iterator it = answerChoices.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                tabQuestionChoices[i] = pair.getKey().toString();
-                tabQuestionChoicesResponse[i] = (boolean) pair.getValue();
-                ++i;
-                it.remove();
-            }
-            answerChoices.clear();
-        }
-    }
-
-    public void rebuildAfterSend() {
-        if (answerChoices.isEmpty()) {
-            for (int i = 0; i < tabQuestionChoices.length; i++) {
-                answerChoices.put(tabQuestionChoices[i], tabQuestionChoicesResponse[i]);
-            }
-            tabQuestionChoices = new String[0];
-            tabQuestionChoicesResponse = new boolean[0];
-        }
-    }
-
 }
