@@ -103,9 +103,7 @@ public class AnswerFragment extends Fragment {
                         if(question.getAnswerChoices().get(choosenAnswer)) {
                             final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                             // Create TextView
-                            final TextView input = new TextView (getActivity());
                             alert.setTitle("Nice job !!");
-                            alert.setView(input);
                             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     mListener.onFragmentInteraction();

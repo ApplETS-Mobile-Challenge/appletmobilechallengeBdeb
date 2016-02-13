@@ -91,8 +91,9 @@ public class Create_Survey extends AppCompatActivity {
                     Questionnaire questionnaire = new Questionnaire(0, questionnaireName,
                             cal.getTime(), cal.getTime());
                     questionnaire.setQuestionList(questionList);
-                    dbHelper.insertNewQuestionnaire(questionnaire);
+                    int id = dbHelper.insertNewQuestionnaire(questionnaire);
                     QuestionnaireTemplate ques = new QuestionnaireTemplate();
+                    questionnaire.setQuestionnaireId(id);
                     ques = questionnaire.convertToQuestionnaireTemplate();
                     Intent intent = new Intent();
                     intent.putExtra(QUESTIONNAIRE_TEMPLATE, ques);

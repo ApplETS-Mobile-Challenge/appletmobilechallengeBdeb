@@ -79,7 +79,7 @@ public class List_Survey extends AppCompatActivity {
         listViewActivite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final int questionnaireId = adapterActivite.getItem(position).questionnaireId;
+                final int questionnaireId = questionnaireList.get(position).questionnaireId;
                 new BottomSheet.Builder(List_Survey.this).title(adapterActivite.getItem(position).questionnaireName).sheet(R.menu.menu_bottom_sheet).listener(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
