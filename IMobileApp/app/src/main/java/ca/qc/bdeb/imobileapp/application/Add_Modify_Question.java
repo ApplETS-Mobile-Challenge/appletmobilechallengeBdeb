@@ -62,6 +62,12 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
             @Override
             public void onClick(View view) {
                 Question question = new Question(0, editText.getText().toString(), 0);
+
+                for(int i = 0; i < listViewAnswers.getAdapter().getCount(); i++){
+                    question.addAnswerChoices(answer_adapter.getItem(i).getAnswer()
+                            , answer_adapter.getItem(i).getaBoolean());
+                }
+
                 Intent intent = new Intent();
                 intent.putExtra("question", question);
                 setResult(Create_Survey.RESULT_SUCCES, intent);
