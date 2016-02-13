@@ -18,5 +18,6 @@
     <string name="title_devices">Devices</string>
     <string name="scan">Scan</string>
     <string name="stopScan">Stop Scanning</string>
+    <string name="title_activity_send">SendActivity</string>
 
 </resources>
