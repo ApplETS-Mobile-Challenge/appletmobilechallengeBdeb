@@ -17,59 +17,48 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
 import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
 import ca.qc.bdeb.imobileapp.modele.utilitaires.XmlParser;
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class BluetoothChatFragment extends Fragment {
+public class SendFragment extends Fragment {
 
     private static final String QUESTIONNAIRE_ID_KEY = "questionnaire_id_key";
     private static final boolean SECURE = true;
 
-    // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_ENABLE_BT = 3;
 
-    private TextView mTitle;
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     private FancyButton mScanButton;
     private FancyButton mSendButton;
+    private TextView status;
+    private TextView create_Date;
 
     private DbHelper dbHelper;
 
-    /**
-     * Name of the connected device
-     */
     private String mConnectedDeviceName = null;
 
-    /**
-     * String buffer for outgoing messages
-     */
     private StringBuffer mOutStringBuffer;
 
-    /**
-     * Local Bluetooth adapter
-     */
     private BluetoothAdapter mBluetoothAdapter = null;
 
-    /**
-     * Member object for the chat services
-     */
-    private BluetoothChatService mChatService = null;
+    private SendReceiveService mChatService = null;
 
     private Questionnaire questionnaire;
 
-    public static BluetoothChatFragment newInstance(int questionnaireId) {
-        BluetoothChatFragment fragment = new BluetoothChatFragment();
+    public static SendFragment newInstance(int questionnaireId) {
+        SendFragment fragment = new SendFragment();
         Bundle args = new Bundle();
         args.putInt(QUESTIONNAIRE_ID_KEY, questionnaireId);
         fragment.setArguments(args);
         return fragment;
     }
-
-    private TextView status;
-    private TextView create_Date;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,7 +105,7 @@ public class BluetoothChatFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (mChatService != null) {
-            if (mChatService.getState() == BluetoothChatService.STATE_NONE) {
+            if (mChatService.getState() == SendReceiveService.STATE_NONE) {
                 mChatService.start();
             }
         }
@@ -130,15 +119,14 @@ public class BluetoothChatFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        create_Date = (TextView) view.findViewById(R.id.send_activity_creation);
+        getActivity().setTitle(questionnaire.getQuestionnaireName());
+        create_Date = (TextView) view.findViewById(R.id.send_activity_date);
+        create_Date.setText(simpleDateFormat.format(questionnaire.getCreationDate().getTime()));
         status = (TextView) view.findViewById(R.id.send_activity_status);
         mScanButton = (FancyButton) view.findViewById(R.id.send_activity_btn_scan);
         mSendButton = (FancyButton) view.findViewById(R.id.send_activity_btn_send);
     }
 
-    /**
-     * Set up the UI and background operations for chat.
-     */
     private void initialiserComposante() {
 
         mScanButton.setOnClickListener(new View.OnClickListener() {
@@ -149,24 +137,18 @@ public class BluetoothChatFragment extends Fragment {
             }
         });
 
-        // Initialize the send button with a listener that for click events
         mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 sendMessage(XmlParser.parseToXml(questionnaire));
             }
         });
 
-        mChatService = new BluetoothChatService(getActivity(), mHandler);
+        mChatService = new SendReceiveService(getActivity(), mHandler);
         mOutStringBuffer = new StringBuffer("");
     }
 
-    /**
-     * Sends a message.
-     *
-     * @param message A string of text to send.
-     */
     private void sendMessage(String message) {
-        if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
+        if (mChatService.getState() != SendReceiveService.STATE_CONNECTED) {
             Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -185,18 +167,19 @@ public class BluetoothChatFragment extends Fragment {
             switch (msg.what) {
                 case Constants.MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
-                        case BluetoothChatService.STATE_CONNECTED:
+                        case SendReceiveService.STATE_CONNECTED:
                             status.setText(getString(R.string.title_connected_to, mConnectedDeviceName));
                             status.setTextColor(Color.parseColor("#FF007E0A"));
                             break;
-                        case BluetoothChatService.STATE_CONNECTING:
+                        case SendReceiveService.STATE_CONNECTING:
                             status.setText(R.string.title_connecting);
                             status.setTextColor(Color.parseColor("#FFC107"));
                             break;
-                        case BluetoothChatService.STATE_LISTEN:
-                        case BluetoothChatService.STATE_NONE:
+                        case SendReceiveService.STATE_LISTEN:
+                        case SendReceiveService.STATE_NONE:
                             status.setText(R.string.title_not_connected);
                             status.setTextColor(Color.parseColor("#ff0900"));
+
                             break;
                     }
                     break;

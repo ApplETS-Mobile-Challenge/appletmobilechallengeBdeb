@@ -1,5 +1,7 @@
 package ca.qc.bdeb.imobileapp.application;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,20 +12,26 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
+import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
+import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
 
 public class Create_Survey extends AppCompatActivity {
 
     public static final int RESULT_SUCCES = 1;
-    private List<Question> questionList;
+    private ArrayList<Question> questionList;
     private ListView listViewQuestion;
     private Survey_Question_Adapter adapterActivite;
+    private DbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +39,7 @@ public class Create_Survey extends AppCompatActivity {
         setContentView(R.layout.activity_create__survey);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        dbHelper = DbHelper.getInstance(getApplicationContext());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_question);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +74,33 @@ public class Create_Survey extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id == R.id.action_delete){
-            //
+        if(id == R.id.action_done){
+            final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Create a questionnaire");
+            alert.setMessage("Enter a title");
+            // Create TextView
+            final EditText input = new EditText (this);
+            alert.setView(input);
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    String questionnaireName = input.getText().toString();
+                    Calendar cal = Calendar.getInstance();
+                    Questionnaire questionnaire = new Questionnaire(0, questionnaireName,
+                            cal.getTime(), cal.getTime());
+                    questionnaire.setQuestionList(questionList);
+                    dbHelper.insertNewQuestionnaire(questionnaire);
+                    finish();
+                }
+            });
+
+            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                }
+            });
+
+            alert.show();
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -78,7 +111,8 @@ public class Create_Survey extends AppCompatActivity {
 
         if (resultCode == RESULT_SUCCES){
             Question question = (Question)data.getSerializableExtra("question");
-            adapterActivite.add(question);
+            questionList.add(question);
+           // adapterActivite.add(question);
             adapterActivite.notifyDataSetChanged();
         }
     }
