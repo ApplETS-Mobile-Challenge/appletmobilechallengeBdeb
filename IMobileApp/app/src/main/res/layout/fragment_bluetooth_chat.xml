@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
  Copyright 2014 The Android Open Source Project
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,42 +14,166 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/coordinatorlayout">
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/send_activity_txv_title"
-            android:layout_width="384dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/send_activity_btn_scan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Scan" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-        <Button
-            android:id="@+id/send_activity_btn_discoverable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Discoverable" />
+                <TextView
+                    android:id="@+id/send_activity_creation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/creation_date"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/send_activity_btn_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Send" />
+                <TextView
+                    android:id="@+id/send_activity_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/send_activity_creation"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/divider"></View>
+
+                <TextView
+                    android:id="@+id/send_activity_sta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/status"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/send_activity_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/send_activity_sta"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/send_activity_btn_scan"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="#6fa700"
+                    fancy:fb_focusColor="#7ab800"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="20dp"
+                    fancy:fb_text="@string/menu_scan"
+                    fancy:fb_textColor="#FFFFFF"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    style="@style/style_home_button"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/send_activity_btn_send"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="#6fa700"
+                    fancy:fb_focusColor="#7ab800"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="20dp"
+                    fancy:fb_text="@string/menu_send"
+                    fancy:fb_textColor="#FFFFFF"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    style="@style/style_home_button"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></LinearLayout>
+
+
     </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+
+    <Button
+        android:id="@+id/send_activity_btn_discoverable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Discoverable" />
+
+</LinearLayout>

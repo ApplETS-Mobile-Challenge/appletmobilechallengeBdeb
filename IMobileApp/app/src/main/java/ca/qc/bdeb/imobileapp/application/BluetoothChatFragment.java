@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,10 +19,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
 import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
 import ca.qc.bdeb.imobileapp.modele.utilitaires.XmlParser;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class BluetoothChatFragment extends Fragment {
 
@@ -33,9 +37,9 @@ public class BluetoothChatFragment extends Fragment {
     private static final int REQUEST_ENABLE_BT = 3;
 
     private TextView mTitle;
-    private Button mScanButton;
+    private FancyButton mScanButton;
     private Button mDiscoverableButton;
-    private Button mSendButton;
+    private FancyButton mSendButton;
 
     private DbHelper dbHelper;
 
@@ -68,6 +72,9 @@ public class BluetoothChatFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    private TextView status;
+    private TextView create_Date;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,10 +135,11 @@ public class BluetoothChatFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mTitle = (TextView) view.findViewById(R.id.send_activity_txv_title);
-        mScanButton = (Button) view.findViewById(R.id.send_activity_btn_scan);
+        create_Date = (TextView) view.findViewById(R.id.send_activity_creation);
+        status = (TextView) view.findViewById(R.id.send_activity_status);
+        mScanButton = (FancyButton) view.findViewById(R.id.send_activity_btn_scan);
         mDiscoverableButton = (Button) view.findViewById(R.id.send_activity_btn_discoverable);
-        mSendButton = (Button) view.findViewById(R.id.send_activity_btn_send);
+        mSendButton = (FancyButton) view.findViewById(R.id.send_activity_btn_send);
     }
 
     /**
@@ -238,13 +246,19 @@ public class BluetoothChatFragment extends Fragment {
                     switch (msg.arg1) {
                         case BluetoothChatService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
+                            status.setText(getString(R.string.title_connected_to, mConnectedDeviceName));
+                            status.setTextColor(Color.parseColor("#FF007E0A"));
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
+                            status.setText(R.string.title_connecting);
+                            status.setTextColor(Color.parseColor("#FFC107"));
                             break;
                         case BluetoothChatService.STATE_LISTEN:
                         case BluetoothChatService.STATE_NONE:
                             setStatus(R.string.title_not_connected);
+                            status.setText(R.string.title_not_connected);
+                            status.setTextColor(Color.parseColor("#ff0900"));
                             break;
                     }
                     break;

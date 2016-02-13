@@ -79,7 +79,7 @@ public class DeviceListActivity extends Activity {
         setResult(Activity.RESULT_CANCELED);
 
         // Initialize the button to perform device discovery
-        FancyButton scanButton = (FancyButton) findViewById(R.id.button_scan);
+        Button scanButton = (Button) findViewById(R.id.button_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 doDiscovery();
