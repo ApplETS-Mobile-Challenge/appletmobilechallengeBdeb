@@ -123,11 +123,12 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         listHashmapAnswers.remove(position);
         answer_adapter.notifyDataSetChanged();
     }
-    public void checkCaseTrue(){
+    public void setCaseTrue(){
+//        listHashmapAnswers.get(position).setaBoolean(true);
         if (caseChecked){
             caseChecked = false;
-        }else {
-            caseChecked = true;///
+        } else {
+            caseChecked = true;
         }
     }
 }

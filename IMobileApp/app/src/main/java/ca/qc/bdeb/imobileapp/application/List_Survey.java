@@ -54,8 +54,6 @@ public class List_Survey extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         questionnaireList = dbHelper.getAllQuestionnaire();
-
-        //todo get all questionnaire
         listViewActivite = (ListView) findViewById(R.id.content_list_survey_listView);
         adapterActivite = new Survey_Adapter(List_Survey.this, R.layout.layout_list_survey, questionnaireList);
         listViewActivite.setAdapter(adapterActivite);
