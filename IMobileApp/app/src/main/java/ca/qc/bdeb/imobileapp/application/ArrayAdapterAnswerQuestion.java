@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-
+import android.support.v4.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +20,11 @@ import ca.qc.bdeb.imobileapp.R;
 public class ArrayAdapterAnswerQuestion extends ArrayAdapter<String> {
 
     private Context context;
-    public ArrayAdapterAnswerQuestion(Context context, int resource, ArrayList<String> items) {
+    private Fragment fragment;
+    public ArrayAdapterAnswerQuestion(Fragment fragment, Context context, int resource, ArrayList<String> items) {
         super(context, resource, items);
         this.context = context;
+        this.fragment = fragment;
     }
 
     private class Holder {
@@ -41,6 +43,13 @@ public class ArrayAdapterAnswerQuestion extends ArrayAdapter<String> {
             convertView = mInflater.inflate(R.layout.layout_list_answer_question, null);
             holder = new Holder();
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBox_answer_question);
+            holder.checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CheckBox checkBox = (CheckBox)v;
+                    ((AnswerFragment) fragment).checkBoxClicked((String)checkBox.getText());
+                }
+            });
             convertView.setTag(holder);
         }
         else {
