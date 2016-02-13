@@ -15,6 +15,7 @@ import com.cocosw.bottomsheet.BottomSheet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import ca.qc.bdeb.imobileapp.R;
@@ -33,8 +34,17 @@ public class List_Survey extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbHelper = DbHelper.getInstance(this);
         setContentView(R.layout.activity_list__survey);
+
+        dbHelper = DbHelper.getInstance(this);
+
+        Questionnaire questionnaire = new Questionnaire(0, "Cat names", new Date(), new Date());
+        ArrayList<Question> questions = new ArrayList<>();
+        questions.add(new Question(0, "What is the name of the africain cat", 0));
+        questionnaire.setQuestionList(questions);
+
+        dbHelper.insertNewQuestionnaire(questionnaire);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -55,6 +65,7 @@ public class List_Survey extends AppCompatActivity {
         listViewActivite = (ListView) findViewById(R.id.content_list_survey_listView);
         adapterActivite = new Survey_Adapter(List_Survey.this, R.layout.layout_list_survey, questionnaireList);
         listViewActivite.setAdapter(adapterActivite);
+
         adapterActivite.notifyDataSetChanged();
 
         addListListener();

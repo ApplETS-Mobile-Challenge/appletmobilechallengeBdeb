@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -79,13 +80,6 @@ public class DbHelper extends SQLiteOpenHelper {
         createQuestionnaireTable(db);
         createQuestionnTable(db);
         createAnswerChoicesTable(db);
-
-        Questionnaire questionnaire = new Questionnaire(0, "Cat names", new Date(), new Date());
-        ArrayList<Question> questions = new ArrayList<>();
-        questions.add(new Question(0, "What is the name of the africain cat",0));
-        questionnaire.setQuestionList(questions);
-
-        insertNewQuestionnaire(questionnaire);
     }
 
     private void createQuestionnaireTable(SQLiteDatabase db) {
@@ -242,6 +236,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 templates.add(template);
             }
         }
+
         return templates;
     }
 

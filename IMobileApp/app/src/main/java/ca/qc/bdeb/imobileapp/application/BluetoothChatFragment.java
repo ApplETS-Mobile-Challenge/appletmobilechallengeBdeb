@@ -1,6 +1,5 @@
 package ca.qc.bdeb.imobileapp.application;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,11 +14,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
@@ -38,7 +34,6 @@ public class BluetoothChatFragment extends Fragment {
 
     private TextView mTitle;
     private FancyButton mScanButton;
-    private Button mDiscoverableButton;
     private FancyButton mSendButton;
 
     private DbHelper dbHelper;
@@ -138,7 +133,6 @@ public class BluetoothChatFragment extends Fragment {
         create_Date = (TextView) view.findViewById(R.id.send_activity_creation);
         status = (TextView) view.findViewById(R.id.send_activity_status);
         mScanButton = (FancyButton) view.findViewById(R.id.send_activity_btn_scan);
-        mDiscoverableButton = (Button) view.findViewById(R.id.send_activity_btn_discoverable);
         mSendButton = (FancyButton) view.findViewById(R.id.send_activity_btn_send);
     }
 
@@ -155,13 +149,6 @@ public class BluetoothChatFragment extends Fragment {
             }
         });
 
-        mDiscoverableButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ensureDiscoverable();
-            }
-        });
-
         // Initialize the send button with a listener that for click events
         mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -171,18 +158,6 @@ public class BluetoothChatFragment extends Fragment {
 
         mChatService = new BluetoothChatService(getActivity(), mHandler);
         mOutStringBuffer = new StringBuffer("");
-    }
-
-    /**
-     * Makes this device discoverable.
-     */
-    private void ensureDiscoverable() {
-        if (mBluetoothAdapter.getScanMode() !=
-                BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 100);
-            startActivity(discoverableIntent);
-        }
     }
 
     /**
@@ -203,40 +178,6 @@ public class BluetoothChatFragment extends Fragment {
         }
     }
 
-    /**
-     * Updates the status on the action bar.
-     *
-     * @param resId a string resource ID
-     */
-    private void setStatus(int resId) {
-        FragmentActivity activity = getActivity();
-        if (null == activity) {
-            return;
-        }
-        final ActionBar actionBar = activity.getActionBar();
-        if (null == actionBar) {
-            return;
-        }
-        actionBar.setSubtitle(resId);
-    }
-
-    /**
-     * Updates the status on the action bar.
-     *
-     * @param subTitle status
-     */
-    private void setStatus(CharSequence subTitle) {
-        FragmentActivity activity = getActivity();
-        if (null == activity) {
-            return;
-        }
-        final ActionBar actionBar = activity.getActionBar();
-        if (null == actionBar) {
-            return;
-        }
-        actionBar.setSubtitle(subTitle);
-    }
-
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -245,18 +186,15 @@ public class BluetoothChatFragment extends Fragment {
                 case Constants.MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
                         case BluetoothChatService.STATE_CONNECTED:
-                            setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
                             status.setText(getString(R.string.title_connected_to, mConnectedDeviceName));
                             status.setTextColor(Color.parseColor("#FF007E0A"));
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
-                            setStatus(R.string.title_connecting);
                             status.setText(R.string.title_connecting);
                             status.setTextColor(Color.parseColor("#FFC107"));
                             break;
                         case BluetoothChatService.STATE_LISTEN:
                         case BluetoothChatService.STATE_NONE:
-                            setStatus(R.string.title_not_connected);
                             status.setText(R.string.title_not_connected);
                             status.setTextColor(Color.parseColor("#ff0900"));
                             break;

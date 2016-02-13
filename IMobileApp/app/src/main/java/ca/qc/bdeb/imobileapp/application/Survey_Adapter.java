@@ -18,12 +18,10 @@ import ca.qc.bdeb.imobileapp.modele.objectModel.QuestionnaireTemplate;
  */
 public class Survey_Adapter extends ArrayAdapter<QuestionnaireTemplate> {
     private Context context;
-    List<QuestionnaireTemplate> items;
 
     public Survey_Adapter(Context context, int resource, List<QuestionnaireTemplate> items) {
-        super(context, resource);
+        super(context, resource, items);
         this.context = context;
-        this.items = items;
     }
 
     private class Survey {
