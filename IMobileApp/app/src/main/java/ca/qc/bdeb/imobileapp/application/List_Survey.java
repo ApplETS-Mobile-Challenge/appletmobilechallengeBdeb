@@ -38,13 +38,6 @@ public class List_Survey extends AppCompatActivity {
 
         dbHelper = DbHelper.getInstance(this);
 
-        Questionnaire questionnaire = new Questionnaire(0, "Cat names", new Date(), new Date());
-        ArrayList<Question> questions = new ArrayList<>();
-        questions.add(new Question(0, "What is the name of the africain cat", 0));
-        questionnaire.setQuestionList(questions);
-
-        dbHelper.insertNewQuestionnaire(questionnaire);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

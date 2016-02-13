@@ -24,7 +24,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -205,7 +204,6 @@ public class BluetoothChatService {
      * Stop all threads
      */
     public synchronized void stop() {
-        Log.d(TAG, "stop");
 
         if (mConnectThread != null) {
             mConnectThread.cancel();
@@ -440,7 +438,6 @@ public class BluetoothChatService {
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
             } catch (IOException e) {
-                Log.e(TAG, "temp sockets not created", e);
             }
 
             mmInStream = tmpIn;
