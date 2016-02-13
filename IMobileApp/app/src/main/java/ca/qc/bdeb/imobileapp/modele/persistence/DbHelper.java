@@ -218,8 +218,14 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<QuestionnaireTemplate> templates = new ArrayList<>();
         QuestionnaireTemplate template = new QuestionnaireTemplate();
-        String query = "select " + QUESTIONNAIRE_ID + ", " + QUESTIONNAIRE_NAME + ", "
-                + QUESTIONNAIRE_EDIT_DATE + " from " + QUESTIONNAIRE_TABLE_NAME;
+        String query = "select " + QUESTIONNAIRE_TABLE_NAME + "."
+                + QUESTIONNAIRE_ID + ", " + QUESTIONNAIRE_NAME + ", "
+                + QUESTIONNAIRE_EDIT_DATE + ", COUNT(" + QUESTION_TABLE_NAME + "." + QUESTION_ID
+                + ") from " + QUESTIONNAIRE_TABLE_NAME + ", " + QUESTION_TABLE_NAME
+                + " WHERE " + QUESTIONNAIRE_TABLE_NAME + "." + QUESTIONNAIRE_ID + " = "
+                + QUESTION_TABLE_NAME + "." + QUESTION_QUESTIONNAIRE_REFERENCE_ID
+                + " GROUP BY " + QUESTION_TABLE_NAME + "." + QUESTION_QUESTIONNAIRE_REFERENCE_ID;
+
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor != null && cursor.getCount() != 0) {
@@ -227,12 +233,14 @@ public class DbHelper extends SQLiteOpenHelper {
             template.questionnaireId = Integer.parseInt(cursor.getString(0));
             template.questionnaireName = cursor.getString(1);
             template.editDate = new Date(Long.parseLong(cursor.getString(2)));
+            template.numberOfAnwer = Integer.parseInt(cursor.getString(3));
             templates.add(template);
             while(cursor.moveToNext()) {
                 template = new QuestionnaireTemplate();
                 template.questionnaireId = Integer.parseInt(cursor.getString(0));
                 template.questionnaireName = cursor.getString(1);
                 template.editDate = new Date(Long.parseLong(cursor.getString(2)));
+                template.numberOfAnwer = Integer.parseInt(cursor.getString(3));
                 templates.add(template);
             }
         }

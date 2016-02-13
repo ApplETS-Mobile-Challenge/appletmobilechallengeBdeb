@@ -62,4 +62,14 @@ public class Questionnaire implements Serializable {
     public void setQuestionList(ArrayList<Question> questionList) {
         this.questionList = questionList;
     }
+
+    public QuestionnaireTemplate convertToQuestionnaireTemplate(){
+        QuestionnaireTemplate questionnaireTemplate = new QuestionnaireTemplate();
+        questionnaireTemplate.questionnaireId = questionnaireId;
+        questionnaireTemplate.questionnaireName = questionnaireName;
+        questionnaireTemplate.numberOfAnwer = questionList.size();
+        questionnaireTemplate.editDate = editDate;
+
+        return questionnaireTemplate;
+    }
 }
