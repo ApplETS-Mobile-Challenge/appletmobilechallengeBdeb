@@ -28,5 +28,4 @@ public class Add_Modify_Question extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 }
