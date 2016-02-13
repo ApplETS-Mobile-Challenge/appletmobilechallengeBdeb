@@ -41,10 +41,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.qc.bdeb.imobileapp.application.HomePage" />
         </activity>
-        <activity android:name=".modele.bluetoothscanner.ListActivity" />
+
         <activity
             android:name=".application.SendActivity"
             android:label="@string/title_activity_send"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name=".application.DeviceListActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
