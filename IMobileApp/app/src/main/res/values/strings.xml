@@ -60,7 +60,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="delete">Delete</string>
     <string name="title_activity_receive">ReceiveActivity</string>
-    <string name="receive_title_reception">All receive survey</string>
+    <string name="receive_title_reception">Received survey</string>
     <string name="receive_discoverable">Discoverable</string>
     <string name="layout_servey_questions">questions</string>
 </resources>

@@ -1,51 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ca.qc.bdeb.imobileapp.application.ReceiveActivity"
     tools:showIn="@layout/activity_receive">
 
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.4">
+            android:layout_weight="1.4"
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-                <mehdi.sakout.fancybuttons.FancyButton
-                    android:id="@+id/content_receive_btn_discoverable"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    fancy:fb_borderColor="#FFFFFF"
-                    fancy:fb_borderWidth="1dp"
-                    fancy:fb_defaultColor="#6fa700"
-                    fancy:fb_focusColor="#7ab800"
-                    fancy:fb_iconPosition="left"
-                    fancy:fb_radius="20dp"
-                    fancy:fb_text="@string/receive_discoverable"
-                    fancy:fb_textColor="#FFFFFF"
-                    style="@style/style_home_button"
-                    android:gravity="center_vertical|center|center_horizontal"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/send_activity_sta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/status"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/content_receive_txv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:ellipsize="end"
+                        android:maxLength="30"
+                        android:maxLines="2"
+                        android:text="status information"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -57,29 +82,22 @@
                     android:layout_height="0.5dp"
                     android:background="@color/divider"></View>
 
-                <TextView
-                    android:id="@+id/send_activity_sta"
-                    android:layout_width="wrap_content"
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/content_receive_btn_discoverable"
+                    style="@style/style_home_button"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/status"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="20dp"/>
-
-                <TextView
-                    android:id="@+id/content_receive_txv_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@+id/send_activity_sta"
-                    android:text="status information"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_marginRight="20dp"/>
+                    android:gravity="center_vertical|center|center_horizontal"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="#6fa700"
+                    fancy:fb_focusColor="#7ab800"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="20dp"
+                    fancy:fb_text="@string/receive_discoverable"
+                    fancy:fb_textColor="#FFFFFF" />
 
             </RelativeLayout>
 
@@ -91,13 +109,15 @@
             android:background="@color/divider"></View>
 
         <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/receive_title_reception"
-            android:id="@+id/textView3"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
             android:layout_weight="2.0"
-            android:gravity="center_vertical|center|center_horizontal" />
+            android:gravity="center_vertical|center|center_horizontal"
+            android:text="@string/receive_title_reception"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ListView
             android:id="@+id/content_reveive_lsv_items"
