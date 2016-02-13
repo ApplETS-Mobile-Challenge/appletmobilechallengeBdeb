@@ -18,7 +18,7 @@ public class XmlParser
 
     public static Questionnaire readFromXml(String data){
         XStream xstream = new XStream(new DomDriver());
-        return (Questionnaire)xstream.fromXML(data);
+        return (Questionnaire) xstream.fromXML(data);
     }
 
 }

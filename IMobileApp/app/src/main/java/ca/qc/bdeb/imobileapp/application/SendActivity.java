@@ -18,7 +18,7 @@ public class SendActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            BluetoothChatFragment fragment = BluetoothChatFragment.newInstance(questionnaireId);
+            SendFragment fragment = SendFragment.newInstance(questionnaireId);
             transaction.replace(R.id.sample_content_fragment, fragment);
             transaction.commit();
         }
