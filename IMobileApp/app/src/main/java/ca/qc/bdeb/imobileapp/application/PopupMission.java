@@ -64,7 +64,7 @@ public class PopupMission {
      */
     private void recupererComposantLayout() {
 
-        txtDescription = (TextView) popupView.findViewById(R.id.popup_mission_txt_description);
+//        txtDescription = (TextView) popupView.findViewById(R.id.popup_mission_txt_description);
         btnOk = (Button) popupView.findViewById(R.id.popup_mission_btn_add);
         btnCancel = (Button) popupView.findViewById(R.id.popup_mission_btn_cancel);
         edtReponse = (EditText)popupView.findViewById(R.id.popup_mission_edt_reponse);
