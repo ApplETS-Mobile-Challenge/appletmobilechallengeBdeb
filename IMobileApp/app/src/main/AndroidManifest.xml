@@ -58,9 +58,11 @@
             android:label="@string/title_activity_send"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name=".application.DeviceListActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".application.DeviceListActivity"
+            android:theme="@style/CustomDialogTheme"/>
+
+
         <activity
             android:name=".application.AnswerActivity"
             android:label="@string/title_activity_answer"

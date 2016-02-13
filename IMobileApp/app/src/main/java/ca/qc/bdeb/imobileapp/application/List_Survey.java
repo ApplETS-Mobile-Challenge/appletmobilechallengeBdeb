@@ -1,6 +1,7 @@
 package ca.qc.bdeb.imobileapp.application;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -81,6 +82,10 @@ public class List_Survey extends AppCompatActivity {
                                 break;
                             case R.id.action_modify:
 
+                                break;
+                            case R.id.action_send:
+                                Intent intent = new Intent(List_Survey.this, SendActivity.class);
+                                startActivity(intent);
                                 break;
                         }
                     }

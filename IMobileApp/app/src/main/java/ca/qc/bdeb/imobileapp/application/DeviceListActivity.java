@@ -33,9 +33,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.net.FileNameMap;
 import java.util.Set;
 
 import ca.qc.bdeb.imobileapp.R;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
  * This Activity appears as a dialog. It lists any paired devices and
@@ -77,7 +79,7 @@ public class DeviceListActivity extends Activity {
         setResult(Activity.RESULT_CANCELED);
 
         // Initialize the button to perform device discovery
-        Button scanButton = (Button) findViewById(R.id.button_scan);
+        FancyButton scanButton = (FancyButton) findViewById(R.id.button_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 doDiscovery();
