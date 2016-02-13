@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by Vincent on 12/02/2016.
@@ -72,4 +74,18 @@ public class Questionnaire implements Serializable {
 
         return questionnaireTemplate;
     }
+
+
+    public void convertBeforeSend(){
+        for (Question question : questionList) {
+            question.convertBeforeSend();
+        }
+    }
+
+    public void rebuildAfterSend(){
+        for (Question question : questionList) {
+            question.rebuildAfterSend();
+        }
+    }
+
 }
