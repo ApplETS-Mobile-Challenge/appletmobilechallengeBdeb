@@ -1,17 +1,20 @@
-<resources xmlns:xliff="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">IMobileApp</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_home_page">Home Page</string>
 
     <string name="menu_create">CREATE</string>
-    <string name="menu_modify">MODIFY</string>
+    <string name="menu_modify">Modify</string>
     <string name="menu_send">SEND</string>
     <string name="menu_receive">RECEIVE</string>
-    <string name="menu_select">SELECT</string>
+    <string name="menu_select">Select</string>
     <string name="menu_see_gestionnaire">SURVEY</string>
     <string name="menu_info">\?</string>
     <string name="title_activity_create__survey">Create_Survey</string>
     <string name="question_mark">No questions in your survey</string>
+    <string name="title_activity_list__questionnaire">List_Questionnaire</string>
+    <string name="title_activity_list__survey">List_Survey</string>
+
     <string name="button_connect">Connect</string>
     <string name="button_disconnect">Disconnect</string>
     <string name="title_devices">Devices</string>
@@ -43,4 +46,5 @@
     <string name="secure_connect">Connect a device - Secure</string>
     <string name="insecure_connect">Connect a device - Insecure</string>
     <string name="discoverable">Make discoverable</string>
+    <string name="title_activity_answer">AnswerActivity</string>
 </resources>

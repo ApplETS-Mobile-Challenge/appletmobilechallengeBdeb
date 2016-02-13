@@ -176,4 +176,33 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         db.close();
     }
+
+    public void updateQuestionnaire(Questionnaire questionnaire) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(QUESTIONNAIRE_NAME, questionnaire.getQuestionnaireName());
+        values.put(QUESTIONNAIRE_CREATION_DATE, questionnaire.getCreationDate().getTime());
+        values.put(QUESTIONNAIRE_EDIT_DATE, questionnaire.getEditDate().getTime());
+        db.update(QUESTION_TABLE_NAME, values, QUESTIONNAIRE_ID + "=?",
+                new String[]{Integer.toString(questionnaire.getQuestionnaireId())});
+        db.close();
+    }
+
+    public void updateAnswerChoices(int answerChoiceId, String answerChoice, boolean veracity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ANSWER_CHOICE_CHOICE, answerChoice);
+        values.put(ANSWER_VERACITY, veracity ? 1 : 0);
+        db.update(ANSWER_CHOICES_TABLE_NAME, values, ANSWER_CHOICE_CHOICE + "=?",
+                new String[]{Integer.toString(answerChoiceId)});
+        db.close();
+    }
+
+    public void updateQuestion(int questionId) {
+
+    }
+
+    public void getAllQuestionnaire() {
+
+    }
 }

@@ -13,6 +13,8 @@ public class HomePage extends AppCompatActivity {
 
     FancyButton btnSend;
     FancyButton btnReceive;
+    FancyButton btnSurvey;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class HomePage extends AppCompatActivity {
 
         btnSend = (FancyButton) findViewById(R.id.home_page_btn_envoyer);
         btnReceive = (FancyButton) findViewById(R.id.home_page_btn_recevoir);
-
+        btnSurvey = (FancyButton) findViewById(R.id.home_page_btn_voir_questionnaire);
     }
 
     private void initializeBtnsClick(){
@@ -48,5 +50,12 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        btnSurvey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePage.this, List_Survey.class);
+                startActivity(intent);
+            }
+        });
     }
 }
