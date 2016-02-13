@@ -200,11 +200,6 @@ public class BluetoothChatFragment extends Fragment {
                             break;
                     }
                     break;
-                case Constants.MESSAGE_READ:
-                    byte[] readBuf = (byte[]) msg.obj;
-                    // construct a string from the valid bytes in the buffer
-                    readSurvey(new String(readBuf, 0, msg.arg1));
-                    break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
                     mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
@@ -222,11 +217,6 @@ public class BluetoothChatFragment extends Fragment {
             }
         }
     };
-
-    private void readSurvey(String stringServey) {
-        Questionnaire questionnaire = XmlParser.readFromXml(stringServey);
-        dbHelper.insertNewQuestionnaire(questionnaire);
-    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
