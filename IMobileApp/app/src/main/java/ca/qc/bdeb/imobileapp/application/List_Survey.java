@@ -1,12 +1,16 @@
 package ca.qc.bdeb.imobileapp.application;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.cocosw.bottomsheet.BottomSheet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,21 +44,49 @@ public class List_Survey extends AppCompatActivity {
             }
         });
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         DbHelper db = DbHelper.getInstance(this);
 //        db.
-                Question q = new Question(0, "twetw", 0);
+        Question q = new Question(0, "twetw", 0);
         ArrayList<Question> listQuestion = new ArrayList<>();
         listQuestion.add(q);
         Calendar calendar = Calendar.getInstance();
-        Questionnaire questionnaire = new Questionnaire(0, "tset", calendar.getTime(), calendar.getTime(),listQuestion );
+        Questionnaire questionnaire = new Questionnaire(0, "tset", calendar.getTime(), calendar.getTime(), listQuestion);
         questionnaireList = new ArrayList<>();
         questionnaireList.add(questionnaire);
 
-                //todo get all questionnaire
-                listViewActivite = (ListView) findViewById(R.id.content_list_survey_listView);
-        adapterActivite = new Survey_Adapter(List_Survey.this, R.id.content_list_survey_listView, questionnaireList);
+        //todo get all questionnaire
+        listViewActivite = (ListView) findViewById(R.id.content_list_survey_listView);
+        adapterActivite = new Survey_Adapter(List_Survey.this, R.layout.layout_list_survey, questionnaireList);
         listViewActivite.setAdapter(adapterActivite);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        adapterActivite.notifyDataSetChanged();
+
+        adapterActivite.add(questionnaire);
+        adapterActivite.notifyDataSetChanged();
+
+        addListListener();
+    }
+
+    private void addListListener() {
+        listViewActivite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                new BottomSheet.Builder(List_Survey.this).title(adapterActivite.getItem(position).getQuestionnaireName()).sheet(R.menu.menu_bottom_sheet).listener(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case R.id.action_select:
+
+                                break;
+                            case R.id.action_modify:
+
+                                break;
+                        }
+                    }
+                }).show();
+            }
+        });
     }
 
 }

@@ -4,10 +4,10 @@
     <string name="title_activity_home_page">Home Page</string>
 
     <string name="menu_create">CREATE</string>
-    <string name="menu_modify">MODIFY</string>
+    <string name="menu_modify">Modify</string>
     <string name="menu_send">SEND</string>
     <string name="menu_receive">RECEIVE</string>
-    <string name="menu_select">SELECT</string>
+    <string name="menu_select">Select</string>
     <string name="menu_see_gestionnaire">SURVEY</string>
     <string name="menu_info">\?</string>
     <string name="title_activity_create__survey">Create_Survey</string>

@@ -1,6 +1,7 @@
 package ca.qc.bdeb.imobileapp.application;
 
 import android.app.Activity;
+import android.app.IntentService;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,13 +42,15 @@ public class Survey_Adapter extends ArrayAdapter<Questionnaire> {
         if (convertView == null) {
             holder = new Survey();
             convertView = mInflater.inflate(R.layout.layout_list_survey, null);
-            convertView.setTag(holder);
             holder.title = (TextView) convertView.findViewById(R.id.survey_List_nom);
             holder.nbr_question = (TextView) convertView.findViewById(R.id.survey_list_nbrQuestion);
-
+            convertView.setTag(holder);
         } else {
             holder = (Survey) convertView.getTag();
         }
+
+        holder.title.setText(rowItem.getQuestionnaireName());
+        holder.nbr_question.setText(Integer.toString(rowItem.getQuestionList().size()));
 
         return convertView;
     }
