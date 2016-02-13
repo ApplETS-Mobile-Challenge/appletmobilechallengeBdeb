@@ -62,6 +62,9 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
             @Override
             public void onClick(View view) {
                 Question question = new Question(0, editText.getText().toString(), 0);
+                for(OptionAnswer answer : listHashmapAnswers) {
+                    question.addAnswerChoices(answer.getAnswer(), answer.getaBoolean());
+                }
                 Intent intent = new Intent();
                 intent.putExtra("question", question);
                 setResult(Create_Survey.RESULT_SUCCES, intent);
@@ -92,8 +95,8 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id == R.id.action_delete){
-            //
+        if(id == R.id.action_done){
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -105,7 +108,8 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         if (prc == PopupResultChoices.SUCESS){
 
             OptionAnswer optionAnswer = new OptionAnswer(reponsePopup, Boolean.FALSE);
-            answer_adapter.add(optionAnswer);
+            listHashmapAnswers.add(optionAnswer);
+            //answer_adapter.add(optionAnswer);
             answer_adapter.notifyDataSetChanged();
         }
     }

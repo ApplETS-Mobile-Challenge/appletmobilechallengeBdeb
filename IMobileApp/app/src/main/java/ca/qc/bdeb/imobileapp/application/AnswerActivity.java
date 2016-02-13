@@ -20,7 +20,7 @@ import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
 public class AnswerActivity extends AppCompatActivity implements
         AnswerFragment.OnFragmentInteractionListener {
 
-    private static final String QUESTIONNAIRE = "questionnaire";
+    public static final String QUESTIONNAIRE = "questionnaire";
 
     private int currentIndex = 0;
     private Questionnaire questionnaire;
@@ -43,9 +43,9 @@ public class AnswerActivity extends AppCompatActivity implements
     @Override
     public void onFragmentInteraction() {
         setTitle("Question N. " + currentIndex + 1);
-        Question question = questionnaire.getQuestionList().get(currentIndex);
-        currentIndex++;
         if (currentIndex < questionnaire.getQuestionList().size()) {
+            Question question = questionnaire.getQuestionList().get(currentIndex);
+            currentIndex++;
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
                     .replace(R.id.container_answer,

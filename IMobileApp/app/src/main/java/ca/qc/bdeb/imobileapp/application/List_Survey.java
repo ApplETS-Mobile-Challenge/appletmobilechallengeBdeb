@@ -73,7 +73,9 @@ public class List_Survey extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case R.id.action_select:
-
+                                Intent intentAnswer = new Intent(List_Survey.this, AnswerActivity.class);
+                                intentAnswer.putExtra(AnswerActivity.QUESTIONNAIRE, dbHelper.getOneQuestionnaire(questionnaireId));
+                                startActivity(intentAnswer);
                                 break;
                             case R.id.action_modify:
 
