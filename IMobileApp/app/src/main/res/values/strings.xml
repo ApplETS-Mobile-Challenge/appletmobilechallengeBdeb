@@ -13,7 +13,7 @@
     <string name="title_activity_create__survey">Create_Survey</string>
     <string name="question_mark">No questions in your survey</string>
     <string name="title_activity_list__questionnaire">List_Questionnaire</string>
-    <string name="title_activity_list__survey">List_Survey</string>
+    <string name="title_activity_list__survey">Surveys</string>
 
     <string name="button_connect">Connect</string>
     <string name="button_disconnect">Disconnect</string>
@@ -47,6 +47,10 @@
     <string name="insecure_connect">Connect a device - Insecure</string>
     <string name="discoverable">Make discoverable</string>
     <string name="title_activity_answer">AnswerActivity</string>
+    <string name="survey_name">Survey selected :</string>
+    <string name="creation_date">Creation date</string>
+    <string name="status">Status</string>
+    <string name="menu_scan">SCAN</string>
 
     <!-- Activity answer-->
     <string name="start_questionnaire">Start</string>

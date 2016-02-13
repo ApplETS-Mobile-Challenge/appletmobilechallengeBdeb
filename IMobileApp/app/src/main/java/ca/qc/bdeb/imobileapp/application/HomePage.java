@@ -1,5 +1,6 @@
 package ca.qc.bdeb.imobileapp.application;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,15 +12,19 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class HomePage extends AppCompatActivity {
 
-    FancyButton btnSend;
-    FancyButton btnReceive;
-    FancyButton btnSurvey;
+    private FancyButton btnSend;
+    private FancyButton btnReceive;
+    private FancyButton btnSurvey;
+    private BluetoothAdapter mBluetoothAdapter = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
         initializeComponent();
         initializeBtnsClick();
     }
@@ -35,8 +40,7 @@ public class HomePage extends AppCompatActivity {
         btnReceive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomePage.this, SendActivity.class);
-                startActivity(intent);
+                ensureDiscoverable();
             }
         });
 
@@ -47,5 +51,17 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Makes this device discoverable.
+     */
+    private void ensureDiscoverable() {
+        if (mBluetoothAdapter.getScanMode() !=
+                BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 100);
+            startActivity(discoverableIntent);
+        }
     }
 }

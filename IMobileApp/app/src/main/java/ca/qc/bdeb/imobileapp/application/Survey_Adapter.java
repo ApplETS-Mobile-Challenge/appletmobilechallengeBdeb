@@ -11,18 +11,17 @@ import android.widget.TextView;
 import java.util.List;
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
+import ca.qc.bdeb.imobileapp.modele.objectModel.QuestionnaireTemplate;
 
 /**
  * Created by Hippolyte Glaus on 13/02/16.
  */
-public class Survey_Adapter extends ArrayAdapter<Questionnaire> {
+public class Survey_Adapter extends ArrayAdapter<QuestionnaireTemplate> {
     private Context context;
-    List<Questionnaire> items;
 
-    public Survey_Adapter(Context context, int resource, List<Questionnaire> items) {
-        super(context, resource);
+    public Survey_Adapter(Context context, int resource, List<QuestionnaireTemplate> items) {
+        super(context, resource, items);
         this.context = context;
-        this.items = items;
     }
 
     private class Survey {
@@ -34,7 +33,7 @@ public class Survey_Adapter extends ArrayAdapter<Questionnaire> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Survey holder = null;
-        Questionnaire rowItem = getItem(position);
+        QuestionnaireTemplate rowItem = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -49,8 +48,8 @@ public class Survey_Adapter extends ArrayAdapter<Questionnaire> {
             holder = (Survey) convertView.getTag();
         }
 
-        holder.title.setText(rowItem.getQuestionnaireName());
-        holder.nbr_question.setText(String.valueOf(rowItem.getQuestionList().size()));
+        holder.title.setText(rowItem.questionnaireName);
+        holder.nbr_question.setText(Integer.toString(rowItem.numberOfAnwer));
 
         return convertView;
     }
