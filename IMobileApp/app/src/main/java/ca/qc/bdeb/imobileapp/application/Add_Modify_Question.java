@@ -56,6 +56,8 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
 
         answer_adapter.notifyDataSetChanged();
 
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        final Question question = new Question();
         fab.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +113,7 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         if (prc == PopupResultChoices.SUCESS){
 
             OptionAnswer optionAnswer = new OptionAnswer(reponsePopup, Boolean.FALSE);
+            listViewAnswers.setItemChecked(0, true);
             answer_adapter.add(optionAnswer);
             answer_adapter.notifyDataSetChanged();
         }
