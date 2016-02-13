@@ -56,15 +56,20 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
 
         answer_adapter.notifyDataSetChanged();
 
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        final Question question = new Question();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Question question = new Question(0, editText.getText().toString(), 0);
-                for(OptionAnswer answer : listHashmapAnswers) {
-                    question.addAnswerChoices(answer.getAnswer(), answer.getaBoolean());
+
+                for(int i = 0; i < listViewAnswers.getAdapter().getCount(); i++){
+                    question.addAnswerChoices(answer_adapter.getItem(i).getAnswer()
+                            , answer_adapter.getItem(i).getaBoolean());
                 }
+
                 Intent intent = new Intent();
                 intent.putExtra("question", question);
                 setResult(Create_Survey.RESULT_SUCCES, intent);
@@ -96,7 +101,7 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         int id = item.getItemId();
 
         if(id == R.id.action_done){
-
+            //
         }
 
         return super.onOptionsItemSelected(item);
@@ -108,8 +113,8 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         if (prc == PopupResultChoices.SUCESS){
 
             OptionAnswer optionAnswer = new OptionAnswer(reponsePopup, Boolean.FALSE);
-            listHashmapAnswers.add(optionAnswer);
-            //answer_adapter.add(optionAnswer);
+            listViewAnswers.setItemChecked(0, true);
+            answer_adapter.add(optionAnswer);
             answer_adapter.notifyDataSetChanged();
         }
     }
