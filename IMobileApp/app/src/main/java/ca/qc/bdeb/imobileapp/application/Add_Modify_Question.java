@@ -19,7 +19,7 @@ import ca.qc.bdeb.imobileapp.modele.objectModel.OptionAnswer;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
 
 
-public class Add_Modify_Question extends AppCompatActivity implements PopupResult {
+public class Add_Modify_Question extends AppCompatActivity implements PopupResult{
 
     private EditText editText;
     private mehdi.sakout.fancybuttons.FancyButton fancyButton;
@@ -84,7 +84,45 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
     }
 
     @Override
-    public void onPopupResult(PopupResultChoices prc, String s) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_delete, menu);
+        return true;
+    }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == R.id.action_delete){
+            //
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    @Override
+    public void onPopupResult(PopupResultChoices prc, String reponsePopup) {
+        if (prc == PopupResultChoices.SUCESS){
+
+            OptionAnswer optionAnswer = new OptionAnswer(reponsePopup, Boolean.FALSE);
+            answer_adapter.add(optionAnswer);
+            answer_adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void deleteOptionAnswer(int position){
+        listHashmapAnswers.remove(position);
+        answer_adapter.notifyDataSetChanged();
+    }
+    public void checkCaseTrue(){
+        if (!caseChecked){
+
+        }
     }
 }
