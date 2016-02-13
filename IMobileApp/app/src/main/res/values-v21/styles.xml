@@ -6,4 +6,10 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="style_home_button">
+
+        <item name="android:layout_margin">@dimen/margin_home_buttons</item>
+        <item name="android:elevation">6dp</item>
+    </style>
 </resources>
