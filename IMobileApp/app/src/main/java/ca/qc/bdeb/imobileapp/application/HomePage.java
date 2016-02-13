@@ -23,6 +23,7 @@ public class HomePage extends AppCompatActivity {
 
     private FancyButton btnReceive;
     private FancyButton btnSurvey;
+    private FancyButton btnCreate;
 
     private BluetoothAdapter mBluetoothAdapter = null;
     private String mConnectedDeviceName = null;
@@ -48,6 +49,7 @@ public class HomePage extends AppCompatActivity {
 
         btnReceive = (FancyButton) findViewById(R.id.home_page_btn_recevoir);
         btnSurvey = (FancyButton) findViewById(R.id.home_page_btn_voir_questionnaire);
+        btnCreate = (FancyButton) findViewById(R.id.home_page_btn_creer);
     }
 
     private void initializeBtnsClick(){
@@ -63,6 +65,13 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomePage.this, List_Survey.class);
+                startActivity(intent);
+            }
+        });
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePage.this, Create_Survey.class);
                 startActivity(intent);
             }
         });
