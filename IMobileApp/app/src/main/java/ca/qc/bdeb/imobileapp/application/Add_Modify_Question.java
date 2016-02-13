@@ -19,7 +19,7 @@ import ca.qc.bdeb.imobileapp.modele.objectModel.OptionAnswer;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
 
 
-public class Add_Modify_Question extends AppCompatActivity implements PopupResult{
+public class Add_Modify_Question extends AppCompatActivity implements PopupResult {
 
     private EditText editText;
     private mehdi.sakout.fancybuttons.FancyButton fancyButton;
@@ -83,4 +83,8 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public void onPopupResult(PopupResultChoices prc, String s) {
+
+    }
 }
