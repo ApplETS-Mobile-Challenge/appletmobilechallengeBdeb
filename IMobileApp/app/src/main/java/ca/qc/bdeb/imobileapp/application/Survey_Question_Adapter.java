@@ -15,12 +15,12 @@ import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
 /**
  * Created by Olivier on 2016-02-12.
  */
-public class Survey_List_Adapter extends ArrayAdapter<Question> {
+public class Survey_Question_Adapter extends ArrayAdapter<Question> {
     Context context;
 
     private List<Question> list;
 
-    public Survey_List_Adapter(Context context, int resourceId, List<Question> items) {
+    public Survey_Question_Adapter(Context context, int resourceId, List<Question> items) {
         super(context, resourceId, items);
         this.list = items;
         this.context = context;
