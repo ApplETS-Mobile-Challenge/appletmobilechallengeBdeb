@@ -29,20 +29,6 @@ public class HomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        Question question = new Question(0, "tegg", 0);
-        question.addAnswerChoices("aaa", true);
-        question.addAnswerChoices("aggs", false);
-        ArrayList<Question> ll = new ArrayList<>();
-        ll.add(question);
-        ll.add(question);
-        Questionnaire ques = new Questionnaire(0, "test", new Date(123123), new Date(123123));
-        ques.setQuestionList(ll);
-        DbHelper accesBd = DbHelper.getInstance(getApplicationContext());
-        int id = accesBd.insertNewQuestionnaire(ques);
-        ArrayList<QuestionnaireTemplate> ddd = accesBd.getAllQuestionnaire();
-        Questionnaire test = accesBd.getOneQuestionnaire(1);
-        accesBd.deleteQuestionnaire(ques);
-
         initializeComponent();
         initializeBtnsClick();
     }
