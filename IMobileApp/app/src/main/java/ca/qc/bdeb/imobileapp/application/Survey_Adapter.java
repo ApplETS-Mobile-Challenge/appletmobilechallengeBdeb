@@ -50,7 +50,7 @@ public class Survey_Adapter extends ArrayAdapter<Questionnaire> {
         }
 
         holder.title.setText(rowItem.getQuestionnaireName());
-        holder.nbr_question.setText(Integer.toString(rowItem.getQuestionList().size()));
+        holder.nbr_question.setText(String.valueOf(rowItem.getQuestionList().size()));
 
         return convertView;
     }
