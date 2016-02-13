@@ -9,5 +9,6 @@ public class QuestionnaireTemplate {
 
     public String questionnaireName;
     public Date editDate;
+    public int numberOfAnwer;
     public int questionnaireId;
 }

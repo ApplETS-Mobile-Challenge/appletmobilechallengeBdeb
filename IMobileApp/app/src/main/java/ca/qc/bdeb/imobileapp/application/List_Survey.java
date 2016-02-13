@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -20,17 +21,20 @@ import java.util.List;
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
+import ca.qc.bdeb.imobileapp.modele.objectModel.QuestionnaireTemplate;
 import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
 
 public class List_Survey extends AppCompatActivity {
 
-    private List<Questionnaire> questionnaireList;
+    private List<QuestionnaireTemplate> questionnaireList;
     private ListView listViewActivite;
     private Survey_Adapter adapterActivite;
+    private DbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbHelper = DbHelper.getInstance(this);
         setContentView(R.layout.activity_list__survey);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,23 +51,11 @@ public class List_Survey extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DbHelper db = DbHelper.getInstance(this);
-        Question q = new Question(0, "twetw", 0);
-        ArrayList<Question> listQuestion = new ArrayList<>();
-        listQuestion.add(q);
-        Calendar calendar = Calendar.getInstance();
-        Questionnaire questionnaire = new Questionnaire(0, "tset", calendar.getTime(), calendar.getTime());
-        questionnaire.setQuestionList(listQuestion);
-        questionnaireList = new ArrayList<>();
-        questionnaireList.add(questionnaire);
+        questionnaireList = dbHelper.getAllQuestionnaire();
 
-        //todo get all questionnaire
         listViewActivite = (ListView) findViewById(R.id.content_list_survey_listView);
         adapterActivite = new Survey_Adapter(List_Survey.this, R.layout.layout_list_survey, questionnaireList);
         listViewActivite.setAdapter(adapterActivite);
-        adapterActivite.notifyDataSetChanged();
-
-        adapterActivite.add(questionnaire);
         adapterActivite.notifyDataSetChanged();
 
         addListListener();
@@ -73,7 +65,8 @@ public class List_Survey extends AppCompatActivity {
         listViewActivite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                new BottomSheet.Builder(List_Survey.this).title(adapterActivite.getItem(position).getQuestionnaireName()).sheet(R.menu.menu_bottom_sheet).listener(new DialogInterface.OnClickListener() {
+                final int questionnaireId = adapterActivite.getItem(position).questionnaireId;
+                new BottomSheet.Builder(List_Survey.this).title(adapterActivite.getItem(position).questionnaireName).sheet(R.menu.menu_bottom_sheet).listener(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
@@ -85,6 +78,7 @@ public class List_Survey extends AppCompatActivity {
                                 break;
                             case R.id.action_send:
                                 Intent intent = new Intent(List_Survey.this, SendActivity.class);
+                                intent.putExtra(SendActivity.QUESTIONNAIRE_KEY, questionnaireId);
                                 startActivity(intent);
                                 break;
                         }

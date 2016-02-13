@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2014 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package ca.qc.bdeb.imobileapp.application;
 
 import android.app.ActionBar;
@@ -25,32 +9,27 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
+import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
+import ca.qc.bdeb.imobileapp.modele.utilitaires.XmlParser;
 
-/**
- * This fragment controls Bluetooth to communicate with other devices.
- */
 public class BluetoothChatFragment extends Fragment {
 
-    private static final String QUESTIONNAIRE_KEY = "questionnaire_key";
+    private static final String QUESTIONNAIRE_ID_KEY = "questionnaire_id_key";
+    private static final boolean SECURE = true;
 
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
-    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
 
     private TextView mTitle;
@@ -58,6 +37,7 @@ public class BluetoothChatFragment extends Fragment {
     private Button mDiscoverableButton;
     private Button mSendButton;
 
+    private DbHelper dbHelper;
 
     /**
      * Name of the connected device
@@ -81,12 +61,10 @@ public class BluetoothChatFragment extends Fragment {
 
     private Questionnaire questionnaire;
 
-    private CoordinatorLayout coordinatorLayout;
-
-    public static BluetoothChatFragment newInstance(Questionnaire questionnaire) {
+    public static BluetoothChatFragment newInstance(int questionnaireId) {
         BluetoothChatFragment fragment = new BluetoothChatFragment();
         Bundle args = new Bundle();
-        args.putSerializable(QUESTIONNAIRE_KEY, questionnaire);
+        args.putInt(QUESTIONNAIRE_ID_KEY, questionnaireId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -94,17 +72,20 @@ public class BluetoothChatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        questionnaire = (Questionnaire) getArguments().getSerializable(QUESTIONNAIRE_KEY);
+
+        dbHelper = DbHelper.getInstance(this.getContext());
+
+        questionnaire = dbHelper.getOneQuestionnaire(getArguments().getInt(QUESTIONNAIRE_ID_KEY));
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        if(questionnaire == null){
+        if (questionnaire == null) {
             FragmentActivity activity = getActivity();
-            Snackbar.make(coordinatorLayout, "Innexpected error", Snackbar.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Non-expected error", Toast.LENGTH_SHORT).show();
             activity.finish();
         } else if (mBluetoothAdapter == null) {
             FragmentActivity activity = getActivity();
-            Snackbar.make(coordinatorLayout, "Bluetooth is not available", Snackbar.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Bluetooth is not available", Toast.LENGTH_SHORT).show();
             activity.finish();
         }
     }
@@ -113,12 +94,9 @@ public class BluetoothChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // If BT is not on, request that it be enabled.
-        // setupChat() will then be called during onActivityResult
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-            // Otherwise, setup the chat session
         } else if (mChatService == null) {
             initialiserComposante();
         }
@@ -135,14 +113,8 @@ public class BluetoothChatFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        // Performing this check in onResume() covers the case in which BT was
-        // not enabled during onStart(), so we were paused to enable it...
-        // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
         if (mChatService != null) {
-            // Only if the state is STATE_NONE, do we know that we haven't started already
             if (mChatService.getState() == BluetoothChatService.STATE_NONE) {
-                // Start the Bluetooth chat services
                 mChatService.start();
             }
         }
@@ -156,7 +128,6 @@ public class BluetoothChatFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinatorlayout);
         mTitle = (TextView) view.findViewById(R.id.send_activity_txv_title);
         mScanButton = (Button) view.findViewById(R.id.send_activity_btn_scan);
         mDiscoverableButton = (Button) view.findViewById(R.id.send_activity_btn_discoverable);
@@ -186,19 +157,11 @@ public class BluetoothChatFragment extends Fragment {
         // Initialize the send button with a listener that for click events
         mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Send a message using content of the edit text widget
-                View view = getView();
-                if (null != view) {
-                    String message = "STRING JUST FOR THE PURPOUS OF TESTING";
-                    sendMessage(message);
-                }
+                sendMessage(XmlParser.parseToXml(questionnaire));
             }
         });
 
-        // Initialize the BluetoothChatService to perform bluetooth connections
         mChatService = new BluetoothChatService(getActivity(), mHandler);
-
-        // Initialize the buffer for outgoing messages
         mOutStringBuffer = new StringBuffer("");
     }
 
@@ -220,37 +183,17 @@ public class BluetoothChatFragment extends Fragment {
      * @param message A string of text to send.
      */
     private void sendMessage(String message) {
-        // Check that we're actually connected before trying anything
         if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
             Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Check that there's actually something to send
         if (message.length() > 0) {
-            // Get the message bytes and tell the BluetoothChatService to write
             byte[] send = message.getBytes();
             mChatService.write(send);
-
-            // Reset out string buffer to zero and clear the edit text field
             mOutStringBuffer.setLength(0);
         }
     }
-
-    /**
-     * The action listener for the EditText widget, to listen for the return key
-     */
-    private TextView.OnEditorActionListener mWriteListener
-            = new TextView.OnEditorActionListener() {
-        public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-            // If the action is a key-up event on the return key, send the message
-            if (actionId == EditorInfo.IME_NULL && event.getAction() == KeyEvent.ACTION_UP) {
-                String message = view.getText().toString();
-                sendMessage(message);
-            }
-            return true;
-        }
-    };
 
     /**
      * Updates the status on the action bar.
@@ -286,9 +229,6 @@ public class BluetoothChatFragment extends Fragment {
         actionBar.setSubtitle(subTitle);
     }
 
-    /**
-     * The Handler that gets information back from the BluetoothChatService
-     */
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -308,15 +248,10 @@ public class BluetoothChatFragment extends Fragment {
                             break;
                     }
                     break;
-                case Constants.MESSAGE_WRITE:
-                    byte[] writeBuf = (byte[]) msg.obj;
-                    // construct a string from the buffer
-                    String writeMessage = new String(writeBuf);
-                    break;
                 case Constants.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
-                    String readMessage = new String(readBuf, 0, msg.arg1);
+                    readSurvey(new String(readBuf, 0, msg.arg1));
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -336,27 +271,22 @@ public class BluetoothChatFragment extends Fragment {
         }
     };
 
+    private void readSurvey(String stringServey) {
+        Questionnaire questionnaire = XmlParser.readFromXml(stringServey);
+        dbHelper.insertNewQuestionnaire(questionnaire);
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CONNECT_DEVICE_SECURE:
-                // When DeviceListActivity returns with a device to connect
                 if (resultCode == Activity.RESULT_OK) {
-                    connectDevice(data, true);
-                }
-                break;
-            case REQUEST_CONNECT_DEVICE_INSECURE:
-                // When DeviceListActivity returns with a device to connect
-                if (resultCode == Activity.RESULT_OK) {
-                    connectDevice(data, false);
+                    connectDevice(data);
                 }
                 break;
             case REQUEST_ENABLE_BT:
-                // When the request to enable Bluetooth returns
                 if (resultCode == Activity.RESULT_OK) {
-                    // Bluetooth is now enabled, so set up a chat session
                     initialiserComposante();
                 } else {
-                    // User did not enable Bluetooth or an error occurred
                     Toast.makeText(getActivity(), R.string.bt_not_enabled_leaving,
                             Toast.LENGTH_SHORT).show();
                     getActivity().finish();
@@ -364,19 +294,10 @@ public class BluetoothChatFragment extends Fragment {
         }
     }
 
-    /**
-     * Establish connection with other divice
-     *
-     * @param data   An {@link Intent} with {@link DeviceListActivity#EXTRA_DEVICE_ADDRESS} extra.
-     * @param secure Socket Security type - Secure (true) , Insecure (false)
-     */
-    private void connectDevice(Intent data, boolean secure) {
-        // Get the device MAC address
+    private void connectDevice(Intent data) {
         String address = data.getExtras()
                 .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-        // Get the BluetoothDevice object
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-        // Attempt to connect to the device
-        mChatService.connect(device, secure);
+        mChatService.connect(device, SECURE);
     }
 }
