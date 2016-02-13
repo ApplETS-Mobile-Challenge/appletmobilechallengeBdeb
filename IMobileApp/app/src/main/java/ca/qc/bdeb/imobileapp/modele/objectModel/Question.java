@@ -20,6 +20,10 @@ public class Question implements Serializable {
         answerChoices = new HashMap<>();
     }
 
+    public Question(){
+
+    }
+
     public int getQuestionId() {
         return questionId;
     }

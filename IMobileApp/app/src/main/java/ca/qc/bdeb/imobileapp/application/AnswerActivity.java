@@ -25,6 +25,7 @@ public class AnswerActivity extends AppCompatActivity implements
     private int currentIndex = 0;
     private Questionnaire questionnaire;
     private ArrayList<Boolean> goodAnswers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,23 +41,18 @@ public class AnswerActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFragmentInteraction(boolean goodAnswer) {
-        goodAnswers.add(goodAnswer);
+    public void onFragmentInteraction() {
+        setTitle("Question N. " + currentIndex + 1);
         Question question = questionnaire.getQuestionList().get(currentIndex);
         currentIndex++;
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
-                .replace(R.id.container_answer,
-                        AnswerFragment.newInstance(question, null)).commit();
-    }
-
-    @Override
-    public void startAnswer() {
-        Question question = questionnaire.getQuestionList().get(currentIndex);
-        currentIndex++;
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
-                .replace(R.id.container_answer,
-                        AnswerFragment.newInstance(question, null)).commit();
+        if (currentIndex < questionnaire.getQuestionList().size()) {
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+                    .replace(R.id.container_answer,
+                            AnswerFragment.newInstance(question, null)).commit();
+        }
+        else {
+            finish();
+        }
     }
 }

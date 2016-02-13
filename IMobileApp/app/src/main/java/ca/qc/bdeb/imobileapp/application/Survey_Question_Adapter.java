@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
 
+import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
  * Created by Olivier on 2016-02-12.
@@ -26,7 +29,7 @@ public class Survey_Question_Adapter extends ArrayAdapter<Question> {
         this.context = context;
     }
 
-    private class NoteHolder {
+    private class QuestionHolder {
         TextView title;
         TextView body;
         TextView creation_Date;
@@ -34,20 +37,25 @@ public class Survey_Question_Adapter extends ArrayAdapter<Question> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        NoteHolder holder = null;
+        QuestionHolder holder = null;
         Question rowItem = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-            holder = new NoteHolder();
-           // convertView = mInflater.inflate(R.layout.list_note, null);
+            holder = new QuestionHolder();
+            convertView = mInflater.inflate(R.layout.layout_list_question, null);
+            holder.title = (TextView) convertView.findViewById(R.id.question_list_layout);
+//            holder.isAnswer = (CheckBox) convertView.findViewById(R.id.answer_list_checkbox);
+//            holder.deleteButon = (FancyButton) convertView.findViewById(R.id.home_page_btn_creer);
 
             convertView.setTag(holder);
         } else {
-            holder = (NoteHolder) convertView.getTag();
+            holder = (QuestionHolder) convertView.getTag();
         }
+
+        holder.title.setText(rowItem.getQuestion());
 
         return convertView;
     }
