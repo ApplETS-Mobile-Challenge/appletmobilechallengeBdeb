@@ -31,8 +31,6 @@ public class Survey_Question_Adapter extends ArrayAdapter<Question> {
 
     private class QuestionHolder {
         TextView title;
-        TextView body;
-        TextView creation_Date;
     }
 
     @Override
@@ -47,9 +45,6 @@ public class Survey_Question_Adapter extends ArrayAdapter<Question> {
             holder = new QuestionHolder();
             convertView = mInflater.inflate(R.layout.layout_list_question, null);
             holder.title = (TextView) convertView.findViewById(R.id.question_list_layout);
-//            holder.isAnswer = (CheckBox) convertView.findViewById(R.id.answer_list_checkbox);
-//            holder.deleteButon = (FancyButton) convertView.findViewById(R.id.home_page_btn_creer);
-
             convertView.setTag(holder);
         } else {
             holder = (QuestionHolder) convertView.getTag();
@@ -58,17 +53,6 @@ public class Survey_Question_Adapter extends ArrayAdapter<Question> {
         holder.title.setText(rowItem.getQuestion());
 
         return convertView;
-    }
-
-    public void update(int objectPosition, Question question){
-        list.set(objectPosition, question);
-        this.notifyDataSetChanged();
-    }
-
-    public void remove(int objectPosition)
-    {
-        list.remove(objectPosition);
-        this.notifyDataSetChanged();
     }
 
     public void add(Question object){

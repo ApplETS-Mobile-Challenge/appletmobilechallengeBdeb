@@ -140,6 +140,7 @@ public class SendFragment extends Fragment {
         mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 sendMessage(XmlParser.parseToXml(questionnaire));
+                questionnaire.rebuildAfterSend();
             }
         });
 

@@ -34,7 +34,7 @@
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/home_page_btn_creer"
                     style="@style/style_home_button"
-                    android:layout_width="150dp"
+                    android:layout_width="170dp"
 
                     android:layout_height="wrap_content"
 
@@ -63,7 +63,7 @@
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/home_page_btn_recevoir"
                     style="@style/style_home_button"
-                    android:layout_width="150dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -89,7 +89,7 @@
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/home_page_btn_voir_questionnaire"
                     style="@style/style_home_button"
-                    android:layout_width="150dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -135,9 +135,20 @@
             android:layout_alignLeft="@+id/textView4"
             android:layout_alignStart="@+id/textView4"
             android:layout_below="@+id/textView4"
-            android:text="with quiz"
+            android:text="with quizzes"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white" />
+
+        <TextView
+            android:textColor="@android:color/white"
+            android:fontFamily="sans-serif-thin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Open Source"
+            android:id="@+id/textView6"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 </RelativeLayout>
