@@ -8,7 +8,7 @@
     <string name="menu_send">SEND</string>
     <string name="menu_receive">RECEIVE SURVEY</string>
     <string name="menu_select">Answer</string>
-    <string name="menu_see_gestionnaire">MY SURVEY</string>
+    <string name="menu_see_gestionnaire">MY SURVEYS</string>
     <string name="menu_info">\?</string>
     <string name="title_activity_create__survey">New Survey</string>
     <string name="question_mark">No questions in your survey</string>
