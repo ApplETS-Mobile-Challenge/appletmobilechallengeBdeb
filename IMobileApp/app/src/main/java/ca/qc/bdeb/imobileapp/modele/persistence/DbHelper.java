@@ -1,5 +1,6 @@
 package ca.qc.bdeb.imobileapp.modele.persistence;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -28,6 +29,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //NOM DES COLONNES TABLE QUESTION
     private static final String QUESTION_ID = "_id";
+    private static final String QUESTION_QUESTION = "question";
     private static final String QUESTION_QUESTIONNAIRE_REFERENCE_ID = "questionnaireId";
 
     //NOM DES COLONNES TABLE ANSWER CHOICES
@@ -38,7 +40,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public static DbHelper getInstance(Context context) {
         if (instance == null) {
-            instance = new DbHelper(context.getApplicationContext());
+            instance = new DbHelper(context);
         }
         return instance;
     }
@@ -76,6 +78,8 @@ public class DbHelper extends SQLiteOpenHelper {
     private void createQuestionnTable(SQLiteDatabase db) {
         String sqlLine = "CREATE TABLE " + QUESTION_TABLE_NAME +
                 "(" + QUESTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                QUESTION_QUESTION + " TEXT," +
+                QUESTION_QUESTIONNAIRE_REFERENCE_ID + " INTEGER," +
                 "FOREIGN KEY(" + QUESTION_QUESTIONNAIRE_REFERENCE_ID +") REFERENCES " + QUESTIONNAIRE_TABLE_NAME+"(" + QUESTIONNAIRE_ID + "))";
         db.execSQL(sqlLine);
     }
@@ -84,7 +88,18 @@ public class DbHelper extends SQLiteOpenHelper {
         String sqlLine = "CREATE TABLE " + ANSWER_CHOICES_TABLE_NAME +
                 "(" + ANSWER_CHOICES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ANSWER_VERACITY + " INTEGER," +
+                ANSWER_QUESTION_REFERENCE_ID + " INTEGER," +
                 "FOREIGN KEY(" + ANSWER_QUESTION_REFERENCE_ID +") REFERENCES " + QUESTION_TABLE_NAME+"(" + QUESTION_ID + "))";
         db.execSQL(sqlLine);
+    }
+
+    public void insert() {
+        SQLiteDatabase db;
+        ContentValues values = new ContentValues();
+
+        db = this.getWritableDatabase();
+        values.put(QUESTIONNAIRE_NAME, "akjsd");
+        db.insert(QUESTIONNAIRE_TABLE_NAME, null, values);
+        db.close();
     }
 }

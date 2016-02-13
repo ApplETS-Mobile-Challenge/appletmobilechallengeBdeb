@@ -9,11 +9,13 @@ public class Question {
 
     private int questionId;
     private int questionnaireId;
+    private String question;
     private HashMap<String, Boolean> answerChoices;
 
-    public Question(int questionId, int questionnaireId) {
+    public Question(int questionId, String question, int questionnaireId) {
         this.questionId = questionId;
         this.questionnaireId = questionnaireId;
+        this.question = question;
     }
 
     public int getQuestionId() {
@@ -42,5 +44,13 @@ public class Question {
 
     public void deletAnswerChoice(String answerChoiceName) {
         answerChoices.remove(answerChoiceName);
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getQuestion() {
+        return this.question;
     }
 }
