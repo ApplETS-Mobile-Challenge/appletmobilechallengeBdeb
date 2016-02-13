@@ -42,6 +42,7 @@ public class AnswerActivity extends AppCompatActivity implements
 
     @Override
     public void onFragmentInteraction() {
+        setTitle("Question N. " + currentIndex + 1);
         Question question = questionnaire.getQuestionList().get(currentIndex);
         currentIndex++;
         if (currentIndex < questionnaire.getQuestionList().size()) {
