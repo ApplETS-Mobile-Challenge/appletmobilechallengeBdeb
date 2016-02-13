@@ -1,5 +1,7 @@
 package ca.qc.bdeb.imobileapp.application;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +47,26 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         fancyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMission popupMission = new PopupMission(Add_Modify_Question.this, Add_Modify_Question.this);
-                popupMission.show();
+                final AlertDialog.Builder alert = new AlertDialog.Builder(Add_Modify_Question.this);
+                // Create TextView
+                final EditText input = new EditText (Add_Modify_Question.this);
+                alert.setView(input);
+                alert.setTitle("Enter an answer choice");
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        OptionAnswer optionAnswer = new OptionAnswer(input.getText().toString(), false);
+                        listViewAnswers.setItemChecked(0, true);
+                        answer_adapter.add(optionAnswer);
+                        answer_adapter.notifyDataSetChanged();
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                    }
+                });
+                alert.show();
             }
         });
 
@@ -69,7 +91,6 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
                     question.addAnswerChoices(answer_adapter.getItem(i).getAnswer()
                             , answer_adapter.getItem(i).getaBoolean());
                 }
-
                 Intent intent = new Intent();
                 intent.putExtra("question", question);
                 setResult(Create_Survey.RESULT_SUCCES, intent);
