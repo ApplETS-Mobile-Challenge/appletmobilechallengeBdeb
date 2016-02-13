@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import ca.qc.bdeb.imobileapp.R;
+import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
+
 
 public class HomePage extends AppCompatActivity {
 
@@ -15,8 +17,5 @@ public class HomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-
-
-
     }
 }
