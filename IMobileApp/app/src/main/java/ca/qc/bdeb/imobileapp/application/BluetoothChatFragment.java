@@ -25,27 +25,28 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.qc.bdeb.imobileapp.R;
+import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
 
 /**
  * This fragment controls Bluetooth to communicate with other devices.
  */
 public class BluetoothChatFragment extends Fragment {
+
+    private static final String QUESTIONNAIRE_KEY = "questionnaire_key";
 
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
@@ -78,17 +79,32 @@ public class BluetoothChatFragment extends Fragment {
      */
     private BluetoothChatService mChatService = null;
 
+    private Questionnaire questionnaire;
+
+    private CoordinatorLayout coordinatorLayout;
+
+    public static BluetoothChatFragment newInstance(Questionnaire questionnaire) {
+        BluetoothChatFragment fragment = new BluetoothChatFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(QUESTIONNAIRE_KEY, questionnaire);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        // Get local Bluetooth adapter
+        questionnaire = (Questionnaire) getArguments().getSerializable(QUESTIONNAIRE_KEY);
+
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        // If the adapter is null, then Bluetooth is not supported
-        if (mBluetoothAdapter == null) {
+        if(questionnaire == null){
             FragmentActivity activity = getActivity();
-            Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+            Snackbar.make(coordinatorLayout, "Innexpected error", Snackbar.LENGTH_LONG).show();
+            activity.finish();
+        } else if (mBluetoothAdapter == null) {
+            FragmentActivity activity = getActivity();
+            Snackbar.make(coordinatorLayout, "Bluetooth is not available", Snackbar.LENGTH_LONG).show();
             activity.finish();
         }
     }
@@ -140,6 +156,7 @@ public class BluetoothChatFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinatorlayout);
         mTitle = (TextView) view.findViewById(R.id.send_activity_txv_title);
         mScanButton = (Button) view.findViewById(R.id.send_activity_btn_scan);
         mDiscoverableButton = (Button) view.findViewById(R.id.send_activity_btn_discoverable);
@@ -192,7 +209,7 @@ public class BluetoothChatFragment extends Fragment {
         if (mBluetoothAdapter.getScanMode() !=
                 BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
             Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 100);
             startActivity(discoverableIntent);
         }
     }

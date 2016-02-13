@@ -47,12 +47,12 @@ public class List_Survey extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         DbHelper db = DbHelper.getInstance(this);
-//        db.
         Question q = new Question(0, "twetw", 0);
         ArrayList<Question> listQuestion = new ArrayList<>();
         listQuestion.add(q);
         Calendar calendar = Calendar.getInstance();
-        Questionnaire questionnaire = new Questionnaire(0, "tset", calendar.getTime(), calendar.getTime(), listQuestion);
+        Questionnaire questionnaire = new Questionnaire(0, "tset", calendar.getTime(), calendar.getTime());
+        questionnaire.setQuestionList(listQuestion);
         questionnaireList = new ArrayList<>();
         questionnaireList.add(questionnaire);
 

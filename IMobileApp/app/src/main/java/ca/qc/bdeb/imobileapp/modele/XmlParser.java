@@ -16,13 +16,13 @@ public class XmlParser
         this.db = db;
     }
 
-    public void ParseToXml(Questionnaire questionnaire){
+    public void parseToXml(Questionnaire questionnaire){
         XStream xstream = new XStream(new DomDriver());
         String xml = xstream.toXML(questionnaire);
-        ReadFromXml(xml);
+        readFromXml(xml);
     }
 
-    public void ReadFromXml(String data){
+    public void readFromXml(String data){
         XStream xstream = new XStream(new DomDriver());
         Questionnaire newQuestionnaire = (Questionnaire)xstream.fromXML(data);
         db.insertNewQuestionnaire(newQuestionnaire);
