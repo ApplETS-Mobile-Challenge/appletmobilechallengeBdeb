@@ -106,7 +106,7 @@ public class AnswerFragment extends Fragment {
                             alert.setMessage("Enter a title");
                             // Create TextView
                             final TextView input = new TextView (getActivity());
-                            input.setText("Nice job !!");
+                            alert.setTitle("Nice job !!");
                             alert.setView(input);
                             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -124,12 +124,10 @@ public class AnswerFragment extends Fragment {
                                 }
                             }
                             final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                            alert.setTitle("Create a questionnaire");
-                            alert.setMessage("Enter a title");
                             // Create TextView
                             final TextView input = new TextView (getActivity());
-                            input.setText("Wrong answer !! The good one was " + goodAnswer);
-                            alert.setView(input);
+                            alert.setTitle("Wrong answer !!");
+                            alert.setMessage("The good one was " + goodAnswer);
                             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     mListener.onFragmentInteraction();

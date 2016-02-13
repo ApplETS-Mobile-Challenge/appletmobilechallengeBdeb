@@ -43,11 +43,11 @@
         <activity
             android:name=".application.Create_Survey"
             android:label="@string/title_activity_create__survey"
-            android:parentActivityName=".application.HomePage"
+            android:parentActivityName=".application.List_Survey"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.qc.bdeb.imobileapp.application.HomePage" />
+                android:value="ca.qc.bdeb.imobileapp.application.List_Survey" />
         </activity>
         <activity
             android:name=".application.SendActivity"
