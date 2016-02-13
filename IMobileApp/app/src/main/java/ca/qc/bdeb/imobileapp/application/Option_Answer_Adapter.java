@@ -69,9 +69,12 @@ public class Option_Answer_Adapter extends ArrayAdapter<OptionAnswer> {
                 @Override
                 public void onClick(View v) {
                     if (((Add_Modify_Question) activity).caseChecked){
-//                        holder.isAnswer
+                        CheckBox fb = (CheckBox) v;
+//                        ((Add_Modify_Question) activity);
+                        fb.setChecked(false);
                     }else {
                         ((Add_Modify_Question) activity).checkCaseTrue();
+                        
                     }
                 }
             });
