@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity
             android:name=".application.Add_Modify_Question"
             android:label="@string/title_activity_add__modify__question"
@@ -42,11 +41,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.qc.bdeb.imobileapp.application.HomePage" />
         </activity>
-=======
-
-        <activity android:name=".modele.bluetoothscanner.ListActivity"></activity>
->>>>>>> 6a8e690838b64a64c7e5cbeba0b75cd7198993e6
-
         <activity android:name=".modele.bluetoothscanner.ListActivity" />
         <activity
             android:name=".application.SendActivity"
