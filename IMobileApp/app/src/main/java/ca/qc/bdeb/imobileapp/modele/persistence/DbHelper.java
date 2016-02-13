@@ -113,10 +113,10 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(QUESTIONNAIRE_EDIT_DATE, questionnaire.getEditDate().getTime());
         int questionnaireId = (int) db.insert(QUESTIONNAIRE_TABLE_NAME, null, values);
         db.close();
-        insertQuestions(questionnaire.getQuestionList(), questionnaireId);
+        insertNewQuestions(questionnaire.getQuestionList(), questionnaireId);
     }
 
-    private void insertQuestions(ArrayList<Question> questions, int questionnaireId) {
+    private void insertNewQuestions(ArrayList<Question> questions, int questionnaireId) {
         SQLiteDatabase db;
         ContentValues values;
 
