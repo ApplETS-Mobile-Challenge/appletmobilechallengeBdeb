@@ -57,7 +57,7 @@ public class ArrayAdapterAnswerQuestion extends ArrayAdapter<String> {
                             ((AnswerFragment) fragment).checkBoxClicked((String) checkBox.getText());
                         }
                         else {
-                            Toast.makeText(fragment.getContext(), "You can't choose tow answer",
+                            Toast.makeText(fragment.getContext(), "You can't choose tow answers",
                                     Toast.LENGTH_LONG).show();
                             checkBox.setChecked(false);
                         }
