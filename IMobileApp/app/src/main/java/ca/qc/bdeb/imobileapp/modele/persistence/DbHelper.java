@@ -5,6 +5,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
+import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
+
 /**
  * Created by Olivier on 2015-09-25.
  */
@@ -35,6 +43,7 @@ public class DbHelper extends SQLiteOpenHelper {
     //NOM DES COLONNES TABLE ANSWER CHOICES
     private static final String ANSWER_CHOICES_ID = "_id";
     private static final String ANSWER_QUESTION_REFERENCE_ID = "questionId";
+    private static final String ANSWER_CHOICE_CHOICE = "choice";
     private static final String ANSWER_VERACITY = "veracity";
 
 
@@ -88,18 +97,51 @@ public class DbHelper extends SQLiteOpenHelper {
         String sqlLine = "CREATE TABLE " + ANSWER_CHOICES_TABLE_NAME +
                 "(" + ANSWER_CHOICES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ANSWER_VERACITY + " INTEGER," +
+                ANSWER_CHOICE_CHOICE + " TEXT," +
                 ANSWER_QUESTION_REFERENCE_ID + " INTEGER," +
                 "FOREIGN KEY(" + ANSWER_QUESTION_REFERENCE_ID +") REFERENCES " + QUESTION_TABLE_NAME+"(" + QUESTION_ID + "))";
         db.execSQL(sqlLine);
     }
 
-    public void insert() {
+    public void insertNewQuestionnaire(Questionnaire questionnaire) {
         SQLiteDatabase db;
         ContentValues values = new ContentValues();
 
         db = this.getWritableDatabase();
-        values.put(QUESTIONNAIRE_NAME, "akjsd");
-        db.insert(QUESTIONNAIRE_TABLE_NAME, null, values);
+        values.put(QUESTIONNAIRE_NAME, questionnaire.getQuestionnaireName());
+        values.put(QUESTIONNAIRE_CREATION_DATE, questionnaire.getCreationDate().getTime());
+        values.put(QUESTIONNAIRE_EDIT_DATE, questionnaire.getEditDate().getTime());
+        int questionnaireId = (int) db.insert(QUESTIONNAIRE_TABLE_NAME, null, values);
         db.close();
+        insertQuestions(questionnaire.getQuestionList(), questionnaireId);
+    }
+
+    private void insertQuestions(ArrayList<Question> questions, int questionnaireId) {
+        SQLiteDatabase db;
+        ContentValues values;
+
+        db = this.getWritableDatabase();
+        for (Question question : questions) {
+            values = new ContentValues();
+            values.put(QUESTION_QUESTION, question.getQuestion());
+            values.put(QUESTION_QUESTIONNAIRE_REFERENCE_ID,  questionnaireId);
+            int questionId = (int) db.insert(QUESTION_TABLE_NAME, null, values);
+            insertNewAnswerChoices(db, question.getAnswerChoices(), questionId);
+        }
+        db.close();
+
+    }
+    private void insertNewAnswerChoices(SQLiteDatabase db, HashMap<String , Boolean> answerChoices,
+                                        int questionId) {
+        ContentValues values;
+        for(Entry<String , Boolean> answer : answerChoices.entrySet() ) {
+            String answerChoice = answer.getKey();
+            boolean veracity = answer.getValue();
+            values = new ContentValues();
+            values.put(ANSWER_CHOICE_CHOICE, answerChoice);
+            values.put(ANSWER_VERACITY, veracity ? 1 : 0);
+            values.put(ANSWER_QUESTION_REFERENCE_ID, questionId);
+            db.insert(ANSWER_CHOICES_TABLE_NAME, null, values);
+        }
     }
 }
