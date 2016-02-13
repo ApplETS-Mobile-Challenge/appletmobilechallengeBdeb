@@ -40,9 +40,12 @@ public class AnswerActivity extends AppCompatActivity implements
 
     @Override
     public void onFragmentInteraction(boolean goodAnswer) {
+        Question ques = new Question(0,"ajsdhkfjh", 0);
+        ques.addAnswerChoices("hahhs", false);
+        ques.addAnswerChoices("ahsdf", false);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
                 .replace(R.id.container_answer,
-                        AnswerFragment.newInstance(null, "ajjsjj")).commit();
+                        AnswerFragment.newInstance(ques, null)).commit();
     }
 }
