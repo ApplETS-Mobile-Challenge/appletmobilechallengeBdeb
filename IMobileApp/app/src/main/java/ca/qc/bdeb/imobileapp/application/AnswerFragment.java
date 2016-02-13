@@ -1,6 +1,9 @@
 package ca.qc.bdeb.imobileapp.application;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -8,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,10 +20,12 @@ import org.w3c.dom.Text;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Map;
 
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
+import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
@@ -95,13 +101,19 @@ public class AnswerFragment extends Fragment {
                 public void onClick(View v) {
                     if(choosenAnswer != null) {
                         if(question.getAnswerChoices().get(choosenAnswer)) {
-                            Snackbar.make(v, "Nice job !!", Snackbar.LENGTH_LONG);
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            mListener.onFragmentInteraction();
+                            final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                            alert.setTitle("Create a questionnaire");
+                            alert.setMessage("Enter a title");
+                            // Create TextView
+                            final TextView input = new TextView (getActivity());
+                            alert.setTitle("Nice job !!");
+                            alert.setView(input);
+                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    mListener.onFragmentInteraction();
+                                }
+                            });
+                            alert.show();
                         }
                         else {
                             String goodAnswer = null;
@@ -111,14 +123,17 @@ public class AnswerFragment extends Fragment {
                                     break;
                                 }
                             }
-                            Snackbar.make(v, "Wrong answer !! The good one was "
-                                    + goodAnswer, Snackbar.LENGTH_LONG);
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            mListener.onFragmentInteraction();
+                            final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                            // Create TextView
+                            final TextView input = new TextView (getActivity());
+                            alert.setTitle("Wrong answer !!");
+                            alert.setMessage("The good one was " + goodAnswer);
+                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    mListener.onFragmentInteraction();
+                                }
+                            });
+                            alert.show();
                         }
                     }
                     else {

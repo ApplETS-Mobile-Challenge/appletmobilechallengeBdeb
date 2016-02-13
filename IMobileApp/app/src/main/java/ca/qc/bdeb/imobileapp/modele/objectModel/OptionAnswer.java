@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Hippolyte Glaus on 13/02/16.
  */
-public class OptionAnswer implements Serializable  {
+public class OptionAnswer implements Serializable{
     private String answer;
     private Boolean aBoolean;
 
