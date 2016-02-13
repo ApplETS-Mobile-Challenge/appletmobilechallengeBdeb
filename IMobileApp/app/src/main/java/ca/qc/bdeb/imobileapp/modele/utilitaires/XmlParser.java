@@ -3,6 +3,12 @@ package ca.qc.bdeb.imobileapp.modele.utilitaires;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+import ca.qc.bdeb.imobileapp.modele.objectModel.OptionAnswer;
+import ca.qc.bdeb.imobileapp.modele.objectModel.Question;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
 import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
 
@@ -12,15 +18,29 @@ import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
 public class XmlParser {
 
     public static String parseToXml(Questionnaire questionnaire) {
-        questionnaire.convertBeforeSend();
-        XStream xstream = new XStream(new DomDriver());
+        XStream xstream = new XStream();
+        xstream.processAnnotations(Questionnaire.class);
+        xstream.processAnnotations(Question.class);
+        xstream.processAnnotations(OptionAnswer.class);
+
         return xstream.toXML(questionnaire);
     }
 
     public static Questionnaire readFromXml(String data) {
-        XStream xstream = new XStream(new DomDriver());
-        Questionnaire questionnaire = (Questionnaire) xstream.fromXML(data);
-        questionnaire.rebuildAfterSend();
+        Questionnaire questionnaire = null;
+        try {
+            File file = new File(data);
+            FileReader fileReader = new FileReader(file);
+
+            XStream xstream = new XStream();
+            xstream.processAnnotations(Questionnaire.class);
+            xstream.processAnnotations(Question.class);
+            xstream.processAnnotations(OptionAnswer.class);
+
+            questionnaire = (Questionnaire) xstream.fromXML(fileReader);
+        } catch (FileNotFoundException e) {
+        }
+
         return questionnaire;
     }
 

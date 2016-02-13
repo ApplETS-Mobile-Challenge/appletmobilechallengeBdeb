@@ -1,5 +1,8 @@
 package ca.qc.bdeb.imobileapp.modele.objectModel;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+
 import java.io.Serializable;
 import java.sql.Struct;
 import java.util.ArrayList;
@@ -10,12 +13,22 @@ import java.util.Map;
 /**
  * Created by Vincent on 12/02/2016.
  */
+@XStreamAlias("QUESTIONNAIRE")
 public class Questionnaire implements Serializable {
 
+    @XStreamAlias("QUESTIONNAIRE_ID")
     private int questionnaireId;
+
+    @XStreamAlias("QUESTIONNAIRE_NAME")
     private String questionnaireName;
+
+    @XStreamAlias("CREATION_DATE")
     private Date creationDate;
+
+    @XStreamAlias("EDIT_DATE")
     private Date editDate;
+
+    @XStreamAlias("QUESTION_LIST")
     private ArrayList<Question> questionList;
 
     public Questionnaire(int questionnaireId, String questionnaireName, Date creationDate, Date editDate) {
@@ -73,18 +86,5 @@ public class Questionnaire implements Serializable {
         questionnaireTemplate.editDate = editDate;
 
         return questionnaireTemplate;
-    }
-
-
-    public void convertBeforeSend(){
-        for (Question question : questionList) {
-            question.convertBeforeSend();
-        }
-    }
-
-    public void rebuildAfterSend(){
-        for (Question question : questionList) {
-            question.rebuildAfterSend();
-        }
     }
 }
