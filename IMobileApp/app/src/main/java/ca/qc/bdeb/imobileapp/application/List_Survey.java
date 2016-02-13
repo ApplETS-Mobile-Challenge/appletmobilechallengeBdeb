@@ -26,8 +26,9 @@ import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
 
 public class List_Survey extends AppCompatActivity {
 
-    private List<QuestionnaireTemplate> questionnaireList;
-    private ListView listViewActivite;
+    private List<Questionnaire> questionnaireList; // liste de donnes du listview
+
+    private ListView listViewActivite;//
     private Survey_Adapter adapterActivite;
     private DbHelper dbHelper;
 
@@ -55,10 +56,13 @@ public class List_Survey extends AppCompatActivity {
 
         questionnaireList = dbHelper.getAllQuestionnaire();
 
+        //todo get all questionnaire
         listViewActivite = (ListView) findViewById(R.id.content_list_survey_listView);
         adapterActivite = new Survey_Adapter(List_Survey.this, R.layout.layout_list_survey, questionnaireList);
         listViewActivite.setAdapter(adapterActivite);
+        adapterActivite.notifyDataSetChanged();
 
+        adapterActivite.add(questionnaire);
         adapterActivite.notifyDataSetChanged();
 
         addListListener();
