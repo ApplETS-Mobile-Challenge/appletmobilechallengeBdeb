@@ -21,6 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".application.List_Survey"
+            android:label="@string/title_activity_list__survey"
+            android:parentActivityName=".application.HomePage"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.qc.bdeb.imobileapp.application.HomePage" />
+        </activity>
 
         <activity
             android:name=".application.Add_Modify_Question"
