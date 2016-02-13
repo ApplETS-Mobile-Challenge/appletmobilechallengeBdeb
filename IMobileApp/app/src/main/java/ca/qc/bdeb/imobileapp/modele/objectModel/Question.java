@@ -1,11 +1,12 @@
 package ca.qc.bdeb.imobileapp.modele.objectModel;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by Vincent on 12/02/2016.
  */
-public class Question {
+public class Question implements Serializable {
 
     private int questionId;
     private int questionnaireId;
