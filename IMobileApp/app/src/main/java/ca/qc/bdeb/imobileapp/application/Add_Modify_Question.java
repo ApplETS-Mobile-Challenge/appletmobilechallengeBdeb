@@ -100,7 +100,7 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id == R.id.action_delete){
+        if(id == R.id.action_done){
             //
         }
 
@@ -124,10 +124,8 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         answer_adapter.notifyDataSetChanged();
     }
     public void checkCaseTrue(){
-        if (caseChecked){
-            caseChecked = false;
-        }else {
-            caseChecked = true;///
+        if (!caseChecked){
+
         }
     }
 }

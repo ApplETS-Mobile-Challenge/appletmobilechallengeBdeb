@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
 import ca.qc.bdeb.imobileapp.modele.persistence.DbHelper;
@@ -28,13 +30,15 @@ public class BluetoothChatFragment extends Fragment {
     private static final String QUESTIONNAIRE_ID_KEY = "questionnaire_id_key";
     private static final boolean SECURE = true;
 
-    // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_ENABLE_BT = 3;
 
-    private TextView mTitle;
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     private FancyButton mScanButton;
     private FancyButton mSendButton;
+    private TextView status;
+    private TextView create_Date;
 
     private DbHelper dbHelper;
 
@@ -67,9 +71,6 @@ public class BluetoothChatFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    private TextView status;
-    private TextView create_Date;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,7 +131,9 @@ public class BluetoothChatFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        create_Date = (TextView) view.findViewById(R.id.send_activity_creation);
+        getActivity().setTitle(questionnaire.getQuestionnaireName());
+        create_Date = (TextView) view.findViewById(R.id.send_activity_date);
+        create_Date.setText(simpleDateFormat.format(questionnaire.getCreationDate().getTime()));
         status = (TextView) view.findViewById(R.id.send_activity_status);
         mScanButton = (FancyButton) view.findViewById(R.id.send_activity_btn_scan);
         mSendButton = (FancyButton) view.findViewById(R.id.send_activity_btn_send);
@@ -149,7 +152,6 @@ public class BluetoothChatFragment extends Fragment {
             }
         });
 
-        // Initialize the send button with a listener that for click events
         mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 sendMessage(XmlParser.parseToXml(questionnaire));
@@ -197,6 +199,7 @@ public class BluetoothChatFragment extends Fragment {
                         case BluetoothChatService.STATE_NONE:
                             status.setText(R.string.title_not_connected);
                             status.setTextColor(Color.parseColor("#ff0900"));
+
                             break;
                     }
                     break;

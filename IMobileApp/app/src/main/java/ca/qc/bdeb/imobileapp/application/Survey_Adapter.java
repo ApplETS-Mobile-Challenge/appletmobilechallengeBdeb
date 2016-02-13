@@ -27,7 +27,6 @@ public class Survey_Adapter extends ArrayAdapter<QuestionnaireTemplate> {
     private class Survey {
         TextView title;
         TextView nbr_question;
-        TextView creation_Date;
     }
 
     @Override
@@ -49,7 +48,8 @@ public class Survey_Adapter extends ArrayAdapter<QuestionnaireTemplate> {
         }
 
         holder.title.setText(rowItem.questionnaireName);
-        holder.nbr_question.setText(Integer.toString(rowItem.numberOfAnwer));
+        holder.nbr_question.setText(Integer.toString(rowItem.numberOfAnwer)
+                + " " + context.getString(R.string.layout_servey_questions));
 
         return convertView;
     }
