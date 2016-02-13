@@ -16,6 +16,7 @@ public class Question {
         this.questionId = questionId;
         this.questionnaireId = questionnaireId;
         this.question = question;
+        answerChoices = new HashMap<>();
     }
 
     public int getQuestionId() {

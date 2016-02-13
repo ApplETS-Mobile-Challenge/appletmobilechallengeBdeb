@@ -1,5 +1,6 @@
 package ca.qc.bdeb.imobileapp.modele.objectModel;
 
+import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,12 +15,11 @@ public class Questionnaire {
     private Date editDate;
     private ArrayList<Question> questionList;
 
-    public Questionnaire(int questionnaireId, String questionnaireName, Date creationDate, Date editDate, ArrayList<Question> questionList) {
+    public Questionnaire(int questionnaireId, String questionnaireName, Date creationDate, Date editDate) {
         this.questionnaireId = questionnaireId;
         this.questionnaireName = questionnaireName;
         this.creationDate = creationDate;
         this.editDate = editDate;
-        this.questionList = questionList;
     }
 
     public int getQuestionnaireId() {
