@@ -3,13 +3,16 @@
 
     <item
         android:id="@+id/action_select"
-        android:title="@string/menu_select" />
+        android:title="@string/menu_select"
+        android:icon="@drawable/ic_done_black_24dp"/>
 
     <item
     android:id="@+id/action_modify"
-    android:title="@string/menu_modify" />
+    android:title="@string/menu_modify"
+        android:icon="@drawable/ic_edit_black_24dp"/>
 
     <item
         android:id="@+id/action_send"
-        android:title="@string/send" />
+        android:title="@string/send"
+        android:icon="@drawable/ic_send_black_24dp"/>
 </menu>
