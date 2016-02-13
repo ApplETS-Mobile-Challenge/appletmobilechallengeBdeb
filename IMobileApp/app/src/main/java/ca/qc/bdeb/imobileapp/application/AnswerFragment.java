@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -39,6 +40,7 @@ public class AnswerFragment extends Fragment {
     private FancyButton fancyButton;
     private ListView listView;
     private TextView textView;
+    private String choosenAnswer = null;
 
     private ArrayAdapterAnswerQuestion adpater;
     public AnswerFragment() {
@@ -63,7 +65,7 @@ public class AnswerFragment extends Fragment {
             question = (Question) getArguments().getSerializable(QUESTION);
         }
         if(question != null) {
-            adpater = new ArrayAdapterAnswerQuestion(getActivity().getApplicationContext(), R.layout.layout_list_answer_question, getAnswerList());
+            adpater = new ArrayAdapterAnswerQuestion(this, getActivity().getApplicationContext(), R.layout.layout_list_answer_question, getAnswerList());
         }
     }
 
@@ -77,7 +79,7 @@ public class AnswerFragment extends Fragment {
             fancyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onFragmentInteraction(true);
+                    mListener.startAnswer();
                 }
             });
             textView = (TextView) rootView.findViewById(R.id.answer_activity_questionnaire_name_txt_view);
@@ -89,7 +91,13 @@ public class AnswerFragment extends Fragment {
             fancyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onFragmentInteraction(true);
+                    if(choosenAnswer != null) {
+                        mListener.onFragmentInteraction(question.getAnswerChoices().get(choosenAnswer));
+                    }
+                    else {
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Yoo need to choose an answer !", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
             listView = (ListView) rootView.findViewById(R.id.list_view_answer_question);
@@ -137,6 +145,7 @@ public class AnswerFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(boolean goodAnswer);
+        void startAnswer();
     }
 
     private ArrayList<String> getAnswerList() {
@@ -145,5 +154,9 @@ public class AnswerFragment extends Fragment {
             answerList.add(entry.getKey());
         }
         return answerList;
+    }
+
+    public void checkBoxClicked(String  key) {
+        choosenAnswer = key;
     }
 }
