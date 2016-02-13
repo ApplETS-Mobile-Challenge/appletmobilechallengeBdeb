@@ -12,4 +12,5 @@ public class QuestionnaireTemplate implements Serializable {
     public Date editDate;
     public int numberOfAnwer;
     public int questionnaireId;
+
 }

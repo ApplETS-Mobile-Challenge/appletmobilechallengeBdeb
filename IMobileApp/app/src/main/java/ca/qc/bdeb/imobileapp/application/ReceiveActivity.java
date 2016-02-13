@@ -4,21 +4,16 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import ca.qc.bdeb.imobileapp.R;
 import ca.qc.bdeb.imobileapp.modele.objectModel.Questionnaire;
@@ -34,7 +29,7 @@ public class ReceiveActivity extends AppCompatActivity {
 
     private BluetoothAdapter mBluetoothAdapter = null;
     private String mConnectedDeviceName = null;
-    private BluetoothChatService mChatService = null;
+    private SendReceiveService mChatService = null;
 
     private DbHelper dbHelper;
 
@@ -97,16 +92,16 @@ public class ReceiveActivity extends AppCompatActivity {
             switch (msg.what) {
                 case Constants.MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
-                        case BluetoothChatService.STATE_CONNECTED:
+                        case SendReceiveService.STATE_CONNECTED:
                             txvStatus.setText(getString(R.string.title_connected_to, mConnectedDeviceName));
                             txvStatus.setTextColor(Color.parseColor("#FF007E0A"));
                             break;
-                        case BluetoothChatService.STATE_CONNECTING:
+                        case SendReceiveService.STATE_CONNECTING:
                             txvStatus.setText(R.string.title_connecting);
                             txvStatus.setTextColor(Color.parseColor("#FFC107"));
                             break;
-                        case BluetoothChatService.STATE_LISTEN:
-                        case BluetoothChatService.STATE_NONE:
+                        case SendReceiveService.STATE_LISTEN:
+                        case SendReceiveService.STATE_NONE:
                             txvStatus.setText(R.string.title_not_connected);
                             txvStatus.setTextColor(Color.parseColor("#ff0900"));
                             break;
@@ -148,7 +143,7 @@ public class ReceiveActivity extends AppCompatActivity {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
         } else if (mChatService == null) {
-            mChatService = new BluetoothChatService(this, mHandler);
+            mChatService = new SendReceiveService(this, mHandler);
         }
     }
 
@@ -164,7 +159,7 @@ public class ReceiveActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         if (mChatService != null) {
-            if (mChatService.getState() == BluetoothChatService.STATE_NONE) {
+            if (mChatService.getState() == SendReceiveService.STATE_NONE) {
                 mChatService.start();
             }
         }

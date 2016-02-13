@@ -13,6 +13,8 @@ public class Question implements Serializable {
     private String question;
     private HashMap<String, Boolean> answerChoices;
 
+
+
     public Question(int questionId, String question, int questionnaireId) {
         this.questionId = questionId;
         this.questionnaireId = questionnaireId;
@@ -34,6 +36,10 @@ public class Question implements Serializable {
 
     public HashMap<String, Boolean> getAnswerChoices() {
         return answerChoices;
+    }
+
+    public void setAnswerChoices(HashMap<String, Boolean> answerChoices){
+        this.answerChoices = answerChoices;
     }
 
     public void setQuestionId(int questionId) {
