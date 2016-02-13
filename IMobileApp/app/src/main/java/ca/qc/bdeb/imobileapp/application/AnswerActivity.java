@@ -22,8 +22,10 @@ public class AnswerActivity extends AppCompatActivity implements
 
     private static final String QUESTIONNAIRE = "questionnaire";
 
-    int[] tab = new int[]{1,2,3,4,5,6,7};
-    int Liveindex = 0;
+    private int currentIndex = 0;
+    private Questionnaire questionnaire;
+    private ArrayList<Boolean> goodAnswers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,21 +33,26 @@ public class AnswerActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        Questionnaire questionnaire = (Questionnaire) getIntent().getSerializableExtra(QUESTIONNAIRE);
+        goodAnswers = new ArrayList<>();
+        questionnaire = (Questionnaire) getIntent().getSerializableExtra(QUESTIONNAIRE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.container_answer,
-                AnswerFragment.newInstance(null, "kajdhgkj")).commit();
+                AnswerFragment.newInstance(null, questionnaire.getQuestionnaireName())).commit();
     }
 
     @Override
-    public void onFragmentInteraction(boolean goodAnswer) {
-        Question ques = new Question(0,"ajsdhkfjh", 0);
-        ques.addAnswerChoices("hahhs", false);
-        ques.addAnswerChoices("ahsdf", false);
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
-                .replace(R.id.container_answer,
-                        AnswerFragment.newInstance(ques, null)).commit();
+    public void onFragmentInteraction() {
+        setTitle("Question N. " + currentIndex + 1);
+        Question question = questionnaire.getQuestionList().get(currentIndex);
+        currentIndex++;
+        if (currentIndex < questionnaire.getQuestionList().size()) {
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+                    .replace(R.id.container_answer,
+                            AnswerFragment.newInstance(question, null)).commit();
+        }
+        else {
+            finish();
+        }
     }
 }
