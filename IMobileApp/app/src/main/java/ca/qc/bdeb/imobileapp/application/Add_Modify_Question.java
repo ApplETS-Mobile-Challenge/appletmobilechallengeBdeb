@@ -109,7 +109,7 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_delete, menu);
+        inflater.inflate(R.menu.menu_delete_vrai, menu);
         return true;
     }
 
@@ -145,8 +145,10 @@ public class Add_Modify_Question extends AppCompatActivity implements PopupResul
         answer_adapter.notifyDataSetChanged();
     }
     public void checkCaseTrue(){
-        if (!caseChecked){
-
+        if (caseChecked){
+            caseChecked = false;
+        }else {
+            caseChecked = true;///
         }
     }
 }
