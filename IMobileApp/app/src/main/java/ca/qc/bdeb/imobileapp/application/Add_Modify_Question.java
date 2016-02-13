@@ -9,16 +9,16 @@ import android.view.View;
 
 import ca.qc.bdeb.imobileapp.R;
 
-public class Create_Survey extends AppCompatActivity {
+public class Add_Modify_Question extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create__survey);
+        setContentView(R.layout.activity_add__modify__question);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_question);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

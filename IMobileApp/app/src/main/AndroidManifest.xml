@@ -3,6 +3,7 @@
     package="ca.qc.bdeb.imobileapp">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +21,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".application.Add_Modify_Question"
+            android:label="@string/title_activity_add__modify__question"
+            android:parentActivityName=".application.Create_Survey"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.qc.bdeb.imobileapp.application.Create_Survey" />
+        </activity>
+
+        <activity
+            android:name=".application.Create_Survey"
+            android:label="@string/title_activity_create__survey"
+            android:parentActivityName=".application.HomePage"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.qc.bdeb.imobileapp.application.HomePage" />
+        </activity>
+        <activity android:name=".modele.bluetoothscanner.ListActivity" />
+        <activity
+            android:name=".application.SendActivity"
+            android:label="@string/title_activity_send"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
