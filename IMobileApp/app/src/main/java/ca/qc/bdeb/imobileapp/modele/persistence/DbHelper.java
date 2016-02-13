@@ -1,4 +1,4 @@
-package ca.qc.bdeb.imobileapp.modele;
+package ca.qc.bdeb.imobileapp.modele.persistence;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
