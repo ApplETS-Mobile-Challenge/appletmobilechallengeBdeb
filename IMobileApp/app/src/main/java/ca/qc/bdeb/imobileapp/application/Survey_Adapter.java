@@ -48,8 +48,14 @@ public class Survey_Adapter extends ArrayAdapter<QuestionnaireTemplate> {
         }
 
         holder.title.setText(rowItem.questionnaireName);
-        holder.nbr_question.setText(Integer.toString(rowItem.numberOfAnwer)
-                + " " + context.getString(R.string.layout_servey_questions));
+        int nbQuestion = rowItem.numberOfAnwer;
+        if(nbQuestion == 1){
+            holder.nbr_question.setText(Integer.toString(rowItem.numberOfAnwer)
+                    + " " + context.getString(R.string.layout_servey_question));
+        }else{
+            holder.nbr_question.setText(Integer.toString(rowItem.numberOfAnwer)
+                    + " " + context.getString(R.string.layout_servey_questions));
+        }
 
         return convertView;
     }
