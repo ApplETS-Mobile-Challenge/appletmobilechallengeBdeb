@@ -1,5 +1,6 @@
 package ca.qc.bdeb.imobileapp.modele.objectModel;
 
+import java.io.Serializable;
 import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,7 +8,7 @@ import java.util.Date;
 /**
  * Created by Vincent on 12/02/2016.
  */
-public class Questionnaire {
+public class Questionnaire implements Serializable {
 
     private int questionnaireId;
     private String questionnaireName;
